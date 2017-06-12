@@ -1,0 +1,18 @@
+.button{
+	width:105px;
+	height:35px; 
+	text-align:center; 
+	font:15px \5FAE\8F6F\96C5\9ED1; 
+	background:#3B93FF;
+	color:#fff; 
+	text-decoration:none; 
+	cursor:pointer;
+	border-radius:10px; 
+	display:inline-block;
+	line-height:35px;
+	margin:0 auto;
+	border:0px solid;
+}
+
+.button:hover{background:#1165ae;}
+.button:active{background:#0d79d5;}

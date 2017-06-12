@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.QRCloud.dao.ProjectMapper">
+  <resultMap id="projectResult" type="com.QRCloud.domain.Project">
+  	 <result property="projectId" column="project_id" />
+  	 <result property="projectName" column="project_name" />
+  	 <result property="projectComment" column="project_comment" />
+  	 <result property="createTime" column="create_time"/>
+  	 <result property="updateTime" column="update_time" />
+  	 <result property="pubNum" column="pub_num" />
+  	 <result property="accessThreshold" column="access_threshold" />  
+  	 <result property="previewQRUrl" column="qrcode_s3_url_show" />
+  	 <result property="downloadQRUrl" column="qrcode_s3_url_down" />
+  	 <result property="checkStatus" column="check_status" />
+  	 <result property="checkInfo" column="check_info" />
+  </resultMap>
+  
+  <select id="listAllProjects" resultMap="projectResult">
+  	select projects.project_name, projects.project_comment, projects.project_id, create_time, update_time, pub_num, access_threshold from projects, users 
+  	where projects.owner_id = users.user_id and users.user_name = #{userName} and check_status = #{checkStatus} order by projects.update_time desc, projects.create_time desc limit #{offset}, #{num} 
+  </select>
+  
+  <select id="listEveryProject" resultMap="projectResult">
+  	select projects.project_name, projects.project_comment, projects.project_id, create_time, update_time, pub_num, access_threshold from projects 
+  	where check_status = #{checkStatus} order by projects.update_time desc, projects.create_time desc limit #{offset}, #{num} 
+  </select>
+  
+  <select id="getUserName" resultType="java.lang.String">
+  	select users.user_name from users, projects where projects.project_id = #{projectId} and users.user_id = projects.owner_id;
+  </select>
+  
+  <insert id="addProject" useGeneratedKeys="true" keyProperty="project.projectId" >
+  	insert into projects (project_name, project_comment, owner_id, pub_num, access_threshold) 
+  	values ( #{project.projectName} , #{project.projectComment}, (select user_id from users where user_name=#{user.userName}), #{project.pubNum}, #{project.accessThreshold} )
+  </insert>
+  
+  <select id="getTime"  resultMap="projectResult">
+  	select create_time, update_time from projects where project_id = #{projectId}
+  </select>
+  
+  <select id="checkEmpty" resultType="java.lang.Integer">
+  	select COUNT(*) from items where items.project_id = #{projectId}
+  </select>
+  
+  <delete id="deleteProject">
+  	delete from projects where project_id = #{projectId}
+  </delete>
+  
+  <select id="countProject" resultType="java.lang.Integer">
+  	select COUNT(*) from projects where project_id != #{project.projectId} and project_name = #{project.projectName}
+  </select>
+  
+  <update id="updateProject">
+  	update projects set project_name = #{project.projectName}, project_comment = #{project.projectComment}, pub_num = #{project.pubNum}, access_threshold = #{project.accessThreshold} 
+  	where project_id = #{project.projectId}
+  </update>
+  
+  <update id="updateProjectUrl">
+  	update projects set qrcode_s3_url_show = #{project.previewQRUrl}, qrcode_s3_url_down = #{project.downloadQRUrl} where project_id = #{project.projectId}
+  </update>
+  
+  <select id="selectOneProject" resultMap="projectResult">
+  	select * from projects where project_id = #{projectId}
+  </select>
+  
+  <update id="updateProjectCheckStatus">
+  	update projects set check_status = #{project.checkStatus}
+  		where project_id = #{project.projectId}
+  </update>
+  
+  <select id="getProjects" resultMap="projectResult">
+  	select * from projects where project_name like CONCAT('%',#{projectName},'%' ) and check_status = #{checkStatus}
+  </select>
+  
+  <select id="getProjectsWithUser" resultMap="projectResult">
+  	select * from projects where project_name like CONCAT('%',#{projectName},'%' ) 
+  	         and owner_id = (select user_id from users where user_name = #{userName}) and check_status = #{checkStatus}
+  </select>
+  
+  <select id="getVisitData" resultType="hashmap">
+	select province, count(id) as count from t_ip_location, items 
+				where t_ip_location.item_id = items.item_id and items.project_id = #{vs.id} and t_ip_location.country = &apos;中国&apos;
+				and t_ip_location.visit_time &gt; #{vs.startDate}
+				and t_ip_location.visit_time &lt; #{vs.endDate}
+				group by province 
+				order by count DESC  	
+  </select>
+</mapper>
+
+

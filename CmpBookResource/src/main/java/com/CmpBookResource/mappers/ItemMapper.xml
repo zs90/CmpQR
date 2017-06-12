@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CmpBookResource.mappers.ItemMapper">
+  <resultMap id="itemResult" type="Item">
+  	<result property="itemName" column="item_name"/>
+  	<result property="itemUrl" column="resource_s3_url" />
+  	<result property="itemType" column="object_type" />
+  	<result property="itemComment" column="item_comment" />
+  </resultMap>
+  
+  <select id="selectAccessThreshold" resultType="hashmap">
+  	select projects.project_id, access_threshold from projects, items where item_id = #{id} and items.project_id = projects.project_id
+  </select>
+  
+  <select id="selectItem" resultMap="itemResult">
+  	select * from items where item_id = #{id}
+  </select>
+  
+  <update id="updatePV">
+  	update items set page_view = page_view + 1 where item_id = #{id}
+  </update>
+  
+  <select id="getCheckStatus" resultType="java.lang.Integer">
+  	select check_status from projects, items where projects.project_id = items.project_id and items.item_id = #{id}
+  </select>
+</mapper>

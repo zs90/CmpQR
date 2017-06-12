@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.QRCloud.dao.ItemMapper">
+  <resultMap id="itemResult" type="com.QRCloud.domain.Item">
+  	 <result property="itemId" column="item_id" />
+  	 <result property="projectId" column="project_id" />
+  	 <result property="ownerId" column="owner_id" />
+  	 <result property="itemName" column="item_name" />
+  	 <result property="itemComment" column="item_comment" />
+  	 <result property="createTime" column="create_time"/>
+  	 <result property="updateTime" column="update_time" />
+	 <result property="resourceUrl" column="resource_s3_url" />
+  	 <result property="previewQRUrl" column="qrcode_s3_url_pre" />
+  	 <result property="downloadQRUrl" column="qrcode_s3_url_res" />
+  	 <result property="objectType" column="object_type" />
+  	 <result property="objectSize" column="object_size" />
+  	 <result property="pageView" column="page_view" />
+  </resultMap>
+  
+<select id="getItemList" resultMap="itemResult">
+	select * from items where project_id = #{projectId}
+</select>
+
+<select id="selectOneItem" resultMap="itemResult">
+	select * from items where item_id = #{itemId}
+</select>
+
+<insert id="addItem" useGeneratedKeys="true" keyProperty="item.itemId">
+ 	insert into items (item_name, item_comment, owner_id, project_id) values
+	(#{item.itemName}, #{item.itemComment}, (select user_id from users where user_name=#{user.userName}), #{item.projectId})
+</insert>
+
+<update id="updateItemSizeTypeUrl">
+	update items set qrcode_s3_url_pre = #{item.previewQRUrl},
+	                 resource_s3_url = #{item.resourceUrl},
+	                 qrcode_s3_url_res = #{item.downloadQRUrl},
+	                 object_size = #{item.objectSize},
+	                 object_type = #{item.objectType}
+	                 where item_id =#{item.itemId}
+</update>
+
+<update id="updateItemNameSizeType">
+	update items set object_size = #{item.objectSize},
+				     object_type = #{item.objectType},
+				     item_name = #{item.itemName}
+	 				 where item_id =#{item.itemId}
+</update>
+
+<update id="updateItemResourceUrl">
+	update items set resource_s3_url = #{item.resourceUrl}
+	 				 where item_id =#{item.itemId}
+</update>
+
+<update id="updateItemNameComment">
+	update items set item_comment = #{item.itemComment},
+					item_name = #{item.itemName}
+					where item_id = #{item.itemId}
+</update>
+
+<delete id="deleteItem">
+	delete from items where item_id = #{item.itemId}
+</delete>
+
+<insert id="addLinkItem" useGeneratedKeys="true" keyProperty="item.itemId">
+ 	insert into items (item_name, item_comment, owner_id, project_id, resource_s3_url) values
+	(#{item.itemName}, #{item.itemComment}, (select user_id from users where user_name=#{user.userName}), #{item.projectId}, #{item.resourceUrl})
+</insert>
+
+<update id="updateLinkItem">
+	update items set resource_s3_url = #{item.resourceUrl}
+					where item_id = #{item.itemId}
+</update>
+
+<select id="getVisitData" resultType="hashmap">
+	select province, count(id) as count from t_ip_location 
+				where item_id=#{vs.id} and country = &apos;中国&apos;
+				and visit_time &gt; #{vs.startDate}
+				and visit_time &lt; #{vs.endDate}
+				group by province 
+				order by count DESC
+</select>
+</mapper>
