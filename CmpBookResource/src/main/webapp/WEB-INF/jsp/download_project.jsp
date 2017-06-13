@@ -5,19 +5,62 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-1.12.0.min.js"> </script>
 <title>${project.projectName}</title>
+<style type="text/css">
+html{
+	width:100%;
+	margin:0;
+}
+body{
+	width:100%;
+	margin:0; 
+}
+.panel{
+	width:100%;
+	height:170px;
+	margin:10px auto 0; 
+	background-color:#4b79ce;
+}
+.img{
+	width:15%;
+	background-color:white;
+	float:left;
+}
+.title,.instruction{
+	width:30%;
+	height:50%;
+	float:left;
+	font-size:150%;
+	color:white;
+}
+a{
+	color:white;
+	text-decoration:none;
+}
+</style>
 </head>
 <body>
 
-<div style="width:200px; margin:0 auto">
-<p>请点击右键另存为下载</p>
-<h1>${project.projectName}</h1>
 <c:forEach var="item" items="${project.items}">
-	<a href=${item.itemUrl}>
-	${item.itemName}
-	</a>
-	<br/>
+	<div class="panel">
+	<div class="img"></div>
+	<div class="title">
+		${item.itemName}
+	</div>
+	<div class="instruction" style="width:20%">
+		<a href="http://qr.cmpedu.com/CmpBookResource/show_resource.do?id=${item.itemId}"><b>预览</b></a>&nbsp&nbsp&nbsp
+		<a href="http://qr.cmpedu.com/CmpBookResource/download_resource.do?id=${item.itemId}"><b>下载</b></a>
+	</div>
+	</div>
 </c:forEach>
-</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.img').css("height", $(".img").width());
+	$('.img').css("margin", ($(".panel").height() - $(".img").height()) / 2 + 'px ' + $(".panel").width() * 0.05 + 'px');
+	$('.title').css("margin", $(".panel").height() * 0.25 + 'px ' + $(".panel").width() * 0.05 + 'px');
+	$('.instruction').css("margin", $(".panel").height() * 0.25 + 'px ' + $(".panel").width() * 0.05 + 'px');
+});
+</script>
 </body>
 </html>

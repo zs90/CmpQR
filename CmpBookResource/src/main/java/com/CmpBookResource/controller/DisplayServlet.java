@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -125,23 +126,13 @@ public class DisplayServlet {
 			return "/error/resource_not_found";
 		}
 		
-		Iterator<Item> it = project.getItems().iterator();
-		while(it.hasNext()){
-			Item item = it.next();
-			//不能下载的资源，删除
-			if(!validFileType.isDownable(item.getItemType())){
-				it.remove();
-			}
-			else{//能下载的，加密签名
-				String[] temp = item.getItemUrl().split("/");
-				String bucketName = temp[3];
-				String key = item.getItemUrl().split(bucketName + '/')[1];
-				item.setItemUrl(s3client.getUrl(bucketName, key));
-			}
-		}
-		
 		model.addAttribute("project", project);
 		return "/WEB-INF/jsp/download_project";
 	}
 	
+	@ExceptionHandler(Throwable.class)
+	public String handleRunTimeException(Throwable e){
+		e.printStackTrace();
+		return "/error/500_error";
+	}
 }
