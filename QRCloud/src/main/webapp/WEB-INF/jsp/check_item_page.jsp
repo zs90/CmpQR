@@ -82,13 +82,13 @@
 			</tr>
 			<tr>
 				<td rowspan="2">
-					资源下载url
+					资源下载
 				</td>
 				<td>	
 					<div class="input_box1"  style="font-size:10px"> <a id="inspect_item_url_id"></a> </div>
 				</td>
 				<td rowspan="2">
-					资源展示url
+					资源在线预览
 				</td>
 				<td>	
 					<div class="input_box1"  style="font-size:10px"> <a id="inspect_item_display_url_id"></a> </div>

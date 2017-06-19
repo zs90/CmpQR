@@ -166,13 +166,13 @@
 			</tr>
 			<tr>
 				<td rowspan="2">
-					项目下载url
+					项目下载
 				</td>
 				<td>	
 					<div class="input_box1"  style="font-size:10px"> <a id="check_project_url_id"></a> </div>
 				</td>
 				<td rowspan="2">
-					项目展示url
+					项目在线预览
 				</td>
 				<td>	
 					<div class="input_box1"  style="font-size:10px"> <a id="check_project_display_url_id"></a> </div>
@@ -325,7 +325,10 @@ function resetNo(mtable){
 	mtable.draw();
 }
 
-function updateBar(checkStatusRegion){
+function updateBar(checkStatusRegion, table){
+	if(table.rows(".selected").data().length == 0)
+		return;
+	
 	if(checkStatusRegion == 0){	
 		$("#create_button").css("display","none");
 		$("#update_button").css("display","block");
@@ -386,6 +389,8 @@ function updateBar(checkStatusRegion){
 		$("#pv_button").css("display", "none");
 	}	
 	$("#log").text("");
+	$("#search_box").css("display", "none");
+	$('#upper_nav_bar').css("background-color", "#3B93FF");
 }
 
 function initBar(checkStatusRegion){
@@ -416,6 +421,7 @@ function initBar(checkStatusRegion){
 }
 
 function redrawTable(table, myUrl, postData){
+	var data_len = 0;
 	$.ajax({
 		url: myUrl,
 		async:false,
@@ -425,6 +431,7 @@ function redrawTable(table, myUrl, postData){
 		success:function(data){
 			dataSet = [];
 			fucking_id = []
+			data_len = data.length;
 			for(var i = 0; i< data.length; i++){
 				dataSet[i] = new Array();
 				dataSet[i][0] = (parseInt(data[i][0]) + 1).toString();
@@ -439,13 +446,19 @@ function redrawTable(table, myUrl, postData){
 			}
 		}			
 	});	
+	if(data_len == 0){
+		table.clear().draw();
+		return 0;
+	}
+	
 	table.clear().draw();
 	table.rows.add(dataSet);
 	table.columns.adjust().draw();
 	for(var i = 0; i < table.rows().data().length; i++){
 		var row = table.row(i).node();
 		$(row).attr("rid", fucking_id[i]);
-	}	
+	}
+	return data_len;
 }
 
 $(document).ready(function() {	
@@ -512,9 +525,7 @@ $(document).ready(function() {
 		else{
 			table.$('tr.selected').removeClass('selected');
 			$(this).addClass('selected');
-			$("#search_box").css("display", "none");
-			$('#upper_nav_bar').css("background-color", "#3B93FF");
-			updateBar(checkStatusRegion);
+			updateBar(checkStatusRegion, table);
 		}
 		
 		$("#right_panel").css("display", "none");
@@ -925,7 +936,12 @@ $(document).ready(function() {
 	//下一页事件
 	$('#next').on( 'click', function () {
 	   currentPage += 1;
-	   redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+	   var ret = redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+	   if(ret == 0){
+		   alert("已经是最后一页了");
+		   currentPage -= 1;
+		   redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+	   }
 	   $('#cp').text(currentPage);
 	   initBar(checkStatusRegion);	
 	   $("#log").text("");
