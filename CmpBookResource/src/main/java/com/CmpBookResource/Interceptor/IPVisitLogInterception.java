@@ -13,12 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.CmpBookResource.Util.CmpLogger;
 import com.CmpBookResource.service.ItemService;
 
-public class IPVisitLogInterception implements HandlerInterceptor {	
-//	@Autowired
-//	private ApplicationContext appContext;
-//	@Autowired
-//	private IPLoggerFactory ipLoggerFactory;
-	
+/**
+ * 日志记录拦截类
+ * @author Shane
+ * @version 1.0
+ */
+public class IPVisitLogInterception implements HandlerInterceptor {		
 	@Autowired
 	private ItemService itemService;
 	
@@ -39,19 +39,26 @@ public class IPVisitLogInterception implements HandlerInterceptor {
 
 	}
 
+	/**
+	 * 前置处理http请求，用于记录用户ip和访问时间
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-		// TODO Auto-generated method stub
-		//IPLoggerService ips = (IPLoggerService)appContext.getBean("IPLoggerService");
+		//获取id值
 		String id = ((HttpServletRequest)request).getParameter("id");
+		
+		//如果id不合法或者为空，直接跳过
 		if(id == null)
 			return true;
 		
+		//记录日期
 		String day = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		
+		//记录日志
 		cmpLogger.LogInfo(time + " " + request.getRemoteAddr() + "  " + id, "access_log_" + day + ".log");
 		
+		//将访问总次数加1
 		itemService.incrementPVByOne(id);
 			
 		return true;

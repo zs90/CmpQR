@@ -17,6 +17,8 @@
   	 <result property="objectType" column="object_type" />
   	 <result property="objectSize" column="object_size" />
   	 <result property="pageView" column="page_view" />
+  	 <result property="changed" column="changed"  />
+  	 <result property="checkInfo" column="info" />
   </resultMap>
   
 <select id="getItemList" resultMap="itemResult">
@@ -81,4 +83,13 @@
 				group by province 
 				order by count DESC
 </select>
+
+<update id="setItemChanged">
+	update items set changed = #{status}, info = #{info} where item_id = #{item.itemId}
+</update>
+
+<update id="setItemChangedNoInfo">
+	update items set changed = #{status} where item_id = #{item.itemId}
+</update>
+
 </mapper>

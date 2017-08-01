@@ -53,7 +53,7 @@ html,body{
 }
 #search_box{
 	height:27px;
-	width:300px;
+	width:450px;
 	margin:20px;
 	float:left;
 }
@@ -128,8 +128,8 @@ html,body{
 }
 
 .input_table{
-	margin:10px auto 20px;
-	width:400px;
+	margin:10px auto 15px;
+	width:350px;
 	height:250px;
 	text-align:right;
 }

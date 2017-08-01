@@ -26,7 +26,7 @@
 
 .check_input_table{
 	width:650px;
-	height:380px;
+	height:480px;
 	margin:10px auto 0;
 	text-align:center;
 }
@@ -57,9 +57,9 @@
 </div>
 
 <!-- 创建项目对话框 -->
-<div id="create_dialog" class="pop_dialog" style="height:400px">
+<div id="create_dialog" class="pop_dialog" style="height:600px">
 	<div id="mybar1" class="dialog_bar"></div>
-	<div class="input_table" style = "height:280px;">
+	<div class="input_table" style = "height:480px;">
 		<table border="0">
 			<tr>
 				<td>
@@ -75,6 +75,38 @@
 				</td>
 				<td>
 					<div class="input_box2"><textarea name="create_project_comment" id="create_pjcomm_id" class="ta" placeholder="请输入项目简介"></textarea></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					策划编辑
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_editor_name" id="create_editor_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					选题号
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_candidate_num_name" id="create_candidate_num_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					版次
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_edition_name" id="create_edition_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					作者
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_writer_name" id="create_writer_id" class="ti"/></div> 
 				</td>
 			</tr>
 			<tr>
@@ -96,14 +128,14 @@
 		</table>
 	</div>
 	<div class="buttons">
-		<div id="confirm_create" class="button">确定</div> 
+		<div id="confirm_create" class="button">确定</div>&nbsp;&nbsp;&nbsp;&nbsp; 
 		<div id="cancel_create" class="button">取消</div>
 	</div>
 </div>
 <!-- 更新项目对话框 -->
-<div id="update_dialog" class="pop_dialog" style="height:400px">
+<div id="update_dialog" class="pop_dialog" style="height:600px">
 	<div id="mybar2" class="dialog_bar"></div>
-	<div class="input_table" style="height:280px">
+	<div class="input_table" style="height:480px">
 		<table border="0">
 			<tr>
 				<td>
@@ -119,6 +151,38 @@
 				</td>
 				<td>	
 					<div class="input_box2"><textarea name="update_project_comment" id="update_pjcomm_id" class="ta"></textarea></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					策划编辑
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_editor_name" id="update_editor_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					选题号
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_candidate_num_name" id="update_candidate_num_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					版次
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_edition_name" id="update_edition_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					作者
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_writer_name" id="update_writer_id" class="ti"/></div> 
 				</td>
 			</tr>
 			<tr>
@@ -140,12 +204,12 @@
 		</table>
 	</div>	
 	<div class="buttons"> 
-		<div id="confirm_update" class="button">确定</div> 
+		<div id="confirm_update" class="button">确定</div>&nbsp;&nbsp;&nbsp;&nbsp; 
 		<div id="cancel_update" class="button">取消</div> 
 	</div>
 </div>
 <!-- 预览项目对话框 -->
-<div id="check_dialog" class="pop_dialog" style="width:700px; height:500px">
+<div id="check_dialog" class="pop_dialog" style="width:700px; height:600px">
 	<div id="mybar3" class="dialog_bar" style="width:700px">
 	</div>
 	<div class="check_input_table">
@@ -186,6 +250,34 @@
 					<img id="qr_show" width="160"/>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					策划编辑
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_editor_id"> </p></div>
+				</td>
+				<td>
+					选题号
+				</td>
+				<td>	
+					<div class="input_box1"><p id="check_candidate_num_id" > </p></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					版次
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_edition_id" > </p></div>
+				</td>
+				<td>
+					作者
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_writer_id" > </p></div>
+				</td>
+			</tr>
 		</table>
 	</div>	
 	<div class = "buttons">		
@@ -203,6 +295,7 @@
 				<img src="img/ui/Search.png" width=30 height=30 style="vertical-align:middle;"></img>
 				<input type="text" id="search_text_field" style="vertical-align:middle;">
 				<div id="search" class="button" style="vertical-align:middle;">搜索</div>
+				<div id="reset" class="button" style="vertical-align:middle;">重置</div>
 			</div>
 			<div id="create_button" class="operation button" style="float:right;display:block;">
 				<img src="img/ui/Plus.png" width=25 height=25 style="vertical-align:middle;"></img>
@@ -230,11 +323,11 @@
 				批量导码
 			</div>
 			<div id="query_check_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/Briefcase.png" width=25 height=25 style="vertical-align:middle;"></img>
+				<img src="img/ui/HandCursor.png" width=25 height=25 style="vertical-align:middle;"></img>
 				提交审核
 			</div>
 			<div id="uncheck_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/Briefcase.png" width=25 height=25 style="vertical-align:middle;"></img>
+				<img src="img/ui/Restart.png" width=25 height=25 style="vertical-align:middle;"></img>
 				退回修改
 			</div>
 			<div id="preview_project_button" class="operation" style="float:right;display:none;">
@@ -242,15 +335,15 @@
 				进入项目
 			</div>
 			<div id="check_log_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/Open.png" width=25 height=25 style="vertical-align:middle;"></img>
+				<img src="img/ui/News.png" width=25 height=25 style="vertical-align:middle;"></img>
 				查看日志
 			</div>
 			<div id="modify_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/Open.png" width=25 height=25 style="vertical-align:middle;"></img>
+				<img src="img/ui/Support.png" width=25 height=25 style="vertical-align:middle;"></img>
 				申请修改
 			</div>
 			<div id="pv_button" class="operation" style="display:none; float:right" >
-				<img src="img/ui/About.png" width=25 height=25 style="vertical-align:middle;"></img>
+				<img src="img/ui/Document.png" width=25 height=25 style="vertical-align:middle;"></img>
 				访问统计
 			</div>
 	</div>
@@ -304,10 +397,13 @@
 			<table id="project_table" class="display" width="100%">
 			</table>
 		</div>
-		<div id="paging" style="margin:10px auto; width:230px">
+		<div id="paging" style="margin:10px auto; width:600px">
 			<div class="button" id="pre">前一页</div>
 			<div id="cp" style="display:inline">1</div>
 			<div class="button" id="next">后一页</div>
+			&nbsp;&nbsp;<div id="jump" style="display:inline">跳到第<input style="width:30px;border-radius:15px;" id="to_page"></input>页</div>&nbsp;&nbsp;
+			<div class="button" id="to">跳转</div>
+			共<div id="sum_page_len" style="display:inline"></div>页 <div id="sum_project_len" style="display:inline"></div>项
 		</div>
 		<div id="log" style="width:100%; height:300px; border-top:solid 1px #B4B4B4; overflow:auto">
 		</div>
@@ -432,7 +528,8 @@ function redrawTable(table, myUrl, postData){
 			dataSet = [];
 			fucking_id = []
 			data_len = data.length;
-			for(var i = 0; i< data.length; i++){
+			var i = 0;
+			for(; i< data.length - 1; i++){
 				dataSet[i] = new Array();
 				dataSet[i][0] = (parseInt(data[i][0]) + 1).toString();
 				dataSet[i][1] = data[i][1];
@@ -444,9 +541,11 @@ function redrawTable(table, myUrl, postData){
 				dataSet[i][7] = data[i][7];
 				fucking_id[i] = data[i][8];
 			}
+			$('#sum_page_len').text(Math.ceil(data[i] / 10));
+			$('#sum_project_len').text(data[i]);
 		}			
 	});	
-	if(data_len == 0){
+	if(data_len == 1){
 		table.clear().draw();
 		return 0;
 	}
@@ -458,7 +557,6 @@ function redrawTable(table, myUrl, postData){
 		var row = table.row(i).node();
 		$(row).attr("rid", fucking_id[i]);
 	}
-	return data_len;
 }
 
 $(document).ready(function() {	
@@ -472,29 +570,8 @@ $(document).ready(function() {
 	var checkStatusRegion = 0;
 	var currentPage = 1;
 	var actions = ["未审核", "提交审核", "通过审核", "审核未通过", "提交修改"];
-	
-	//数据加载
-	$.ajax({
-		url:"GetProjectList.do",
-		async:false,
-		data:{"checkStatus":0, "page":1, "pageLen":10},
-		type:'post',
-		dataType:'json',
-		success:function(data){
-			for(var i = 0; i< data.length; i++){
-				dataSet[i] = new Array();
-				dataSet[i][0] = (parseInt(data[i][0]) + 1).toString();
-				dataSet[i][1] = data[i][1];
-				dataSet[i][2] = data[i][2];
-				dataSet[i][3] = data[i][3];
-				dataSet[i][4] = data[i][4];
-				dataSet[i][5] = data[i][5];
-				dataSet[i][6] = data[i][6];
-				dataSet[i][7] = data[i][7];
-				fucking_id[i] = data[i][8];
-			}
-		}			
-	});
+	var isSearchMode = false;
+
 	//表格绘制
 	var table = $('#project_table').DataTable( {
 			data: dataSet,
@@ -511,11 +588,9 @@ $(document).ready(function() {
 			paging:false,
 			dom:'t'
 	    });
-	//添加表格元数据
-	for(var i = 0; i < table.rows().data().length; i++){
-		var row = table.row(i).node();
-		$(row).attr("rid", fucking_id[i]);
-	}
+
+	redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+	
 	//表格点击事件
 	$('#project_table tbody').on('click', 'tr', function(){
 		if($(this).hasClass('selected')){
@@ -537,17 +612,13 @@ $(document).ready(function() {
 			
 			if($(this).hasClass('selected')){
 				$(this).removeClass('selected');
-				$(".before_select").css("display", "block");
-				$(".after_select").css("display","none");
-				$('#upper_nav_bar').css("background-color", "#F5F6F9");
+				initBar(checkStatusRegion);	
 				$("#right_panel").css("display", "none");
 			}
 			else{
 				table.$('tr.selected').removeClass('selected');
 				$(this).addClass('selected');
-				$(".before_select").css("display", "none");
-				$(".after_select").css("display","block");
-				$('#upper_nav_bar').css("background-color", "#3B93FF");
+				updateBar(checkStatusRegion, table);
 				$("#right_panel").css("top", e.pageY);
 				$("#right_panel").css("left", e.pageX);
 				$("#right_panel").css("display", "block");
@@ -587,38 +658,63 @@ $(document).ready(function() {
 		
 		$('#create_pjname_id').val("");
 		$('#create_pjcomm_id').val("");
+		$('#create_pub_num_id').val("0");
+		$('#create_access_threshold_id').val("50");
+		$('#create_editor_id').val("");
+		$('#create_edition_id').val("1");
+		$('#create_writer_id').val("");
+		$('#create_candidate_num_id').val("0");
+		
 		var oBox = document.getElementById("create_dialog");
         var oBar = document.getElementById("mybar1");
         startDrag(oBar, oBox);
 	});
 	
 	//创建响应事件
-	$('#confirm_create').click(function(){		
-		if($('#create_pjname_id').val() == "" || $('#create_pub_num_id').val() == ""){
-			alert("项目名和印刷册数不可为空!");
+	$('#confirm_create').click(function(){	
+		//表单验证
+		if($('#create_pjname_id').val() == ""){
+			alert("项目名不可为空");
+			return;
+		}
+		
+		var reg = new RegExp("^[0-9]+$");
+		if(!reg.test($('#create_pub_num_id').val()) || 
+		   !reg.test($('#create_access_threshold_id').val()) ||
+		   !reg.test($('#create_edition_id').val()) ||
+		   !reg.test($('#create_candidate_num_id').val())
+		   ){
+			alert("请输入有效数字！");
 			return;
 		}
 		
 		//ajax提交创建
+		//准备数据
 		var d = {"projectName":$('#create_pjname_id').val(), 
 				"projectComment":$('#create_pjcomm_id').val().replace(/[\r\n]/g,""),
 				"pubNum":$('#create_pub_num_id').val(),
-				"accessThreshold":$('#create_access_threshold_id').val()
+				"accessThreshold":$('#create_access_threshold_id').val(),
+				"writer":$('#create_writer_id').val(),
+				"editor":$('#create_editor_id').val(),
+				"edition":$('#create_edition_id').val(),
+				"candidateNum":$('#create_candidate_num_id').val()
 				};
+		
 		$.ajax({
 			url:"AddProject.do",
 			async:false,
 			type:'post',
 			data:d,
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
 				//提示创建结果
 				if(data == "error")
 					alert("创建失败！换个名字试试！");
 				else{
 					alert("项目创建成功！");
+					data = eval("(" + data + ")");
 					var new_row = table.row.add([table.rows().data().length + 1, 
-					               $('#create_pjname_id').val(),
+					                $('#create_pjname_id').val(),
 				               		$('#create_pjcomm_id').val(), 
 				               		data[1],
 				               		data[2],
@@ -651,6 +747,7 @@ $(document).ready(function() {
 					url:"DeleteProject.do",
 					async:false,
 					type:'post',
+					dataType:'text',
 					data:d,
 					success:function(data){
 						if(data == "1"){
@@ -674,28 +771,66 @@ $(document).ready(function() {
 			$('#update_pjcomm_id').val(table.row('.selected').data()[2]);
 			$('#update_pub_num_id').val(table.row('.selected').data()[6]);
 			$('#update_access_threshold_id').val(table.row('.selected').data()[7]);
+			
+			$.ajax({
+				url:"CheckProject.do",
+				data:{"pid":$(table.row('.selected').node()).attr("rid")},
+				async:false,
+				type:'post',
+				dataType:'json',
+				success:function(data){
+						$('#update_editor_id').val(data[3]);
+						$('#update_edition_id').val(data[4]);
+						$('#update_writer_id').val(data[2]);
+						$('#update_candidate_num_id').val(data[5]);
+				}			
+			});
+			
 			var oBox = document.getElementById("update_dialog");
 			var oBar = document.getElementById("mybar2");
 			startDrag(oBar, oBox);
 	});
 	
 	$('#confirm_update').click(function(){	
+		/*
 		if($('#update_pjname_id').val() == "" || $('#update_pub_num_id').val() == ""){
 			alert("项目名和印刷册数不可为空！");
 			return;
 		}
+		*/
+		//表单验证
+		if($('#update_pjname_id').val() == ""){
+			alert("项目名不可为空");
+			return;
+		}
+		
+		var reg = new RegExp("^[0-9]+$");
+		if(!reg.test($('#update_pub_num_id').val()) || 
+		   !reg.test($('#update_access_threshold_id').val()) ||
+		   !reg.test($('#update_edition_id').val()) ||
+		   !reg.test($('#update_candidate_num_id').val())
+		   ){
+			alert("请输入有效数字！");
+			return;
+		}
+		
 		//ajax提交创建
 		var d = {"projectName":$('#update_pjname_id').val(), 
 				"projectComment":$('#update_pjcomm_id').val().replace(/[\r\n]/g,""),
 				"projectId": $(table.row('.selected').node()).attr("rid"),
 				"pubNum":$('#update_pub_num_id').val(),
-				"accessThreshold":$('#update_access_threshold_id').val()
+				"accessThreshold":$('#update_access_threshold_id').val(),
+				"writer":$('#update_writer_id').val(),
+				"editor":$('#update_editor_id').val(),
+				"edition":$('#update_edition_id').val(),
+				"candidateNum":$('#update_candidate_num_id').val()
 				};
 		$.ajax({
 			url:"UpdateProject.do",
 			async:false,
 			type:'post',
 			data:d,
+			dataType:'text',
 			success:function(data){	
 				if(data == "2"){
 					alert("项目名重复，请修改！");
@@ -726,7 +861,7 @@ $(document).ready(function() {
 		$("#mask").fadeOut(500);
 	});	
 	
-	//进入项目事件
+	//进入项目进行编辑事件
 	$('#enter_button').click(function(){
 		var url = "item_page.do";
 		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
@@ -735,6 +870,17 @@ $(document).ready(function() {
 		  '</form>');
 		$('body').append(form);
 		form.submit();		
+	});
+	
+	//进入项目预览事件
+	$('#preview_project_button').click(function(){
+		var url = "view_item.do";
+		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
+		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
+		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
+		  '</form>');
+		$('body').append(form);
+		form.submit();			
 	});
 	
 	//预览项目事件
@@ -760,6 +906,10 @@ $(document).ready(function() {
 					$("#qr_down").attr("src", data[1]);
 					$('#check_project_url_id').html("http://qr.cmpedu.com/CmpBookResource/<br/>down_project.do?pid=" + $(table.row('.selected').node()).attr("rid"));
 					$('#check_project_display_url_id').html("http://qr.cmpedu.com/CmpBookResource/<br/>show_project.do?pid=" + $(table.row('.selected').node()).attr("rid"));
+					$('#check_editor_id').text(data[3]);
+					$('#check_edition_id').text(data[4]);
+					$('#check_writer_id').text(data[2]);
+					$('#check_candidate_num_id').text(data[5]);
 			}			
 		});
 	});
@@ -790,6 +940,7 @@ $(document).ready(function() {
 		$('#modified').css("color", "black");
 		
 		initBar(checkStatusRegion);	
+		isSearchMode = false;
 			
 		currentPage = 1;
 		$('#cp').text(currentPage);
@@ -807,6 +958,7 @@ $(document).ready(function() {
 		$('#modified').css("color", "black");
 		
 		initBar(checkStatusRegion);	
+		isSearchMode = false;
 		
 		currentPage = 1;
 		$('#cp').text(currentPage);
@@ -824,6 +976,7 @@ $(document).ready(function() {
 		$('#modified').css("color", "black");
 		
 		initBar(checkStatusRegion);	
+		isSearchMode = false;
 				
 		currentPage = 1;
 		$('#cp').text(currentPage);
@@ -841,6 +994,7 @@ $(document).ready(function() {
 		$('#modified').css("color", "black");
 		
 		initBar(checkStatusRegion);	
+		isSearchMode = false;
 				
 		currentPage = 1;
 		$('#cp').text(currentPage);
@@ -858,6 +1012,7 @@ $(document).ready(function() {
 		$('#unpassed').css("color", "black");
 		
 		initBar(checkStatusRegion);	
+		isSearchMode = false;
 				
 		currentPage = 1;
 		$('#cp').text(currentPage);
@@ -879,7 +1034,7 @@ $(document).ready(function() {
 			async:false,
 			data:d,
 			type:'post',
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
 				table.row('.selected').remove().draw();
 				resetNo(table);
@@ -902,7 +1057,7 @@ $(document).ready(function() {
 			async:false,
 			data:d,
 			type:'post',
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
 				table.row('.selected').remove().draw();
 				resetNo(table);
@@ -925,7 +1080,7 @@ $(document).ready(function() {
 			async:false,
 			data:d,
 			type:'post',
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
 				table.row('.selected').remove().draw();
 				resetNo(table);
@@ -936,11 +1091,21 @@ $(document).ready(function() {
 	//下一页事件
 	$('#next').on( 'click', function () {
 	   currentPage += 1;
-	   var ret = redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
-	   if(ret == 0){
-		   alert("已经是最后一页了");
-		   currentPage -= 1;
-		   redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+	   if(isSearchMode == false){
+		   var ret = redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+		   if(ret == 0){
+			   alert("已经是最后一页了");
+			   currentPage -= 1;
+			   redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+		   }
+	   }
+	   else{
+		   var ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+		   if(ret == 0){
+			   alert("已经是最后一页了");
+			   currentPage -= 1;
+			   redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+		   }		   
 	   }
 	   $('#cp').text(currentPage);
 	   initBar(checkStatusRegion);	
@@ -952,14 +1117,68 @@ $(document).ready(function() {
 		if(currentPage == 1)
 			return;
 		currentPage -= 1;
-		redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+		if(isSearchMode == false)
+			redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+		else
+			redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
 		$('#cp').text(currentPage);
 		initBar(checkStatusRegion);	
 		$("#log").text("");
 	} );
 	
-	//搜索事件（待改进）
+	//页面跳转事件
+	$('#to').on( 'click', function () {
+		var reg = new RegExp("^[0-9]+$");
+		if(!reg.test($('#to_page').val())){
+			alert("请输入有效页码");
+			return;
+		}
+		
+		var des_page = parseInt($('#to_page').val());
+
+		var ret = 0;
+		
+		if(isSearchMode == false){
+			ret = redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":des_page, "pageLen":10});
+			if(ret == 0){
+				alert("您的选择超出了最大页码！");
+				redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
+			}
+			else{
+				currentPage = des_page;
+				$('#cp').text(currentPage);
+				initBar(checkStatusRegion);	
+				$("#log").text("");
+			}
+		}
+		else{
+			ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":des_page, "pageLen":10, "projectName":$('#search_text_field').val()});
+			if(ret == 0){
+				alert("您的选择超出了最大页码！");
+				redrawTable(table, "searchProject.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+			}
+			else{
+				currentPage = des_page;
+				$('#cp').text(currentPage);
+				initBar(checkStatusRegion);	
+				$("#log").text("");
+			}			
+		}
+	});
+	
+	//重置事件
+	$('#reset').on( 'click', function(){
+		$('#checking').trigger("click");
+	});
+	
+	//搜索事件
 	$('#search').on( 'click', function () {
+		if($('#search_text_field').val() == ""){
+			alert("搜索不能为空");
+			return;
+		}
+		
+		isSearchMode = true;
 		currentPage = 1;
 		$('#cp').text(currentPage);
 		redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,
@@ -967,21 +1186,9 @@ $(document).ready(function() {
 												"pageLen":10,
 												"projectName":$('#search_text_field').val()}
 					);
-		$('#paging').css("display", "none");
 		$("#log").text("");
 	} );
-	
-	//检查项目事件
-	$('#preview_project_button').click(function(){
-		var url = "check_item.do";
-		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
-		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
-		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
-		  '</form>');
-		$('body').append(form);
-		form.submit();			
-	});
-	
+		
 	//查看日志事件
 	$('#check_log_button').click(function(){
 		$.ajax({

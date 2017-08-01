@@ -158,7 +158,7 @@
 		</table>
 	</div>	
 	<div class = "buttons">
-		<div id="confirm_update" class="button"> 确定</div>
+		<div id="confirm_update" class="button"> 确定</div>&nbsp;&nbsp;&nbsp;&nbsp;
 		<div id="cancel_update" class="button"> 取消</div>		
 	</div>
 </div>
@@ -284,15 +284,15 @@
 		</table>
 	</div>	
 	<div class = "buttons">
-		<div id="confirm_upload" class="button">确定 </div> 
+		<div id="confirm_upload" class="button">确定 </div>&nbsp;&nbsp;&nbsp;&nbsp; 
 		<div id="cancel_upload" class="button">取消 </div>		
 	</div>
 </div>
 
 <!-- 替换链接资源对话框 -->
-<div id="replace_link_dialog" class="pop_dialog">
+<div id="replace_link_dialog" class="pop_dialog" style="height:360px;">
 	<div id = "mybar4" class="dialog_bar"></div>
-	<div class="input_table">
+	<div class="input_table" style="height:220px;">
 		<table border="0">
 			<tr>
 				<td>
@@ -321,8 +321,8 @@
 		</table>
 	</div>	
 	<div class = "buttons">
-		<div id="confirm_replace" class="button"> 确定</div>
-		<div id="cancel_replace" class="button"> 取消	</div>
+		<div id="confirm_replace" class="button"> 确定</div>&nbsp;&nbsp;&nbsp;&nbsp;
+		<div id="cancel_replace" class="button"> 取消</div>
 	</div>
 </div>
 
@@ -367,9 +367,9 @@
 			<div id="link_upload_result" class="upload_display"> </div>
 		</div>
 	</div>
-	<div style="width:220px; height:50px; margin:30px auto 0px;">
-		<div id="confirm_multi_link_upload" class="button"> 确定</div>
-		<div id="cancel_multi_link_upload" class="button"> 取消</div>
+	<div style="width:550px; height:50px; margin:30px auto 0px; text-align:center;">
+		<div id="confirm_multi_link_upload" class="button" style="float:left"> 确定</div>
+		<div id="cancel_multi_link_upload" class="button" style="float:right"> 取消</div>
 	</div>
 </div>
 
@@ -411,7 +411,11 @@
 			<div id="inspect_button" class="operation after_select" >
 				<img src="img/ui/About.png" width=25 height=25 style="vertical-align:middle;"></img>
 				预览资源
-			</div>			
+			</div>		
+			<div id="check_log_button" class="operation after_select">
+				<img src="img/ui/News.png" width=25 height=25 style="vertical-align:middle;"></img>
+				审阅日志
+			</div>	
 			<div class="operation cancel_all_button after_select multiple_select" style="float:left" >取消选择</div>
 			<div class="selected_sum after_select multiple_select" style="color:white; float:left; width:120px; margin:15px 20px; line-height:30px;"></div>
 			<div class="operation delete multiple_select" >
@@ -457,9 +461,11 @@
 			</div>				
 		</div>
 		<div id="rep_queue" style="float:right"></div>
-		<div id='table'>	
+		<div id='table' style="height:65%;">	
 			<table id="item_table" class="display" width="100%">
 			</table>
+		</div>
+		<div id="log" style="width:100%; height:20%; border-top:solid 1px #B4B4B4; overflow:auto">
 		</div>
 	</div>
 </div>
@@ -570,7 +576,8 @@ $(document).ready(function() {
 				dataSet[i][6] = (dataSet[i][6] / 1048576.0).toFixed(3);				
 				fucking_id[i] = data[i][7];
 				comments[i] = data[i][8];
-				dataSet[i][7] = data[i][9];				
+				dataSet[i][7] = data[i][9];	
+				dataSet[i][8] = data[i][10] == 1?"<span style='color:red;font-weight:bold;'>yes</span>":"no";
 				dataSet[i][0] = (parseInt(dataSet[i][0]) + 1).toString();
 			}
 		}			
@@ -586,10 +593,11 @@ $(document).ready(function() {
 			{ title: "所有者" },
 			{ title: "类型" },
 			{ title: "大小(MB)" },
-			{ title: "访问量"}
+			{ title: "访问量"},
+			{ title: "最近修改"}
 		],
 		paging:true,
-		dom:'lrtip'
+		dom:'rtip'
 	});
 	//为表格添加部分元数据
 	for(var i = 0; i < table.rows().data().length; i++){
@@ -703,7 +711,7 @@ $(document).ready(function() {
 		'onSelect' : function(file){
 			var reg = "([\\s\\S]+)\\.([a-zA-Z0-9]+)";
 			var group = file.name.match(reg);
-			if(table.rows('*[item_name=' + group[1] + ']').nodes().length > 0){
+			if(table.rows("*[item_name='" + group[1] + "']").nodes().length > 0){
 				$("#file_upload").uploadify('cancel', file.id);
 				alert(file.name + ":该资源名重复，请重命名文件名后再上传！");
 				return;
@@ -724,7 +732,8 @@ $(document).ready(function() {
 				               dd[3],
 				               dd[4],
 				               (dd[5]/1048576.0).toFixed(3),
-				               dd[6]
+				               dd[6],
+				               "<span style='color:red;font-weight:bold;'>yes</span>"
 								]).draw().node();
 			$(new_row).attr("rid", dd[0]);
 			$(new_row).attr("comment", $("#create_item_comment_id").val());
@@ -759,7 +768,7 @@ $(document).ready(function() {
 			var reg = "([\\s\\S]+)\\.([a-zA-Z0-9]+)";
 			var group = file.name.match(reg);
 
-			var check = table.rows('*[item_name=' + group[1] + ']').nodes();
+			var check = table.rows("*[item_name='" + group[1] + "']").nodes();
 			if(check.length > 0 && check.to$().eq(0).hasClass('selected') == false){
 				$("#file_replace").uploadify('cancel', file.id);
 				alert(file.name + ":该资源名重复，请重命名文件名后再上传！");
@@ -793,7 +802,8 @@ $(document).ready(function() {
 						   table.row('.selected').data()[4], 
 						   json[2],        		          
 						   (json[3]/ 1048576.0).toFixed(3),
-						   table.row('.selected').data()[7]
+						   table.row('.selected').data()[7],
+						   "<span style='color:red;font-weight:bold;'>yes</span>"
 				]).draw();
 				$(table.row(".selected").node()).attr("item_name", json[1]);			
 		},
@@ -820,7 +830,7 @@ $(document).ready(function() {
 			return;
 		}
 		
-		var check = table.rows('*[item_name=' +  $('#update_item_name_id').val() + ']').nodes();
+		var check = table.rows("*[item_name='" +  $('#update_item_name_id').val() + "']").nodes();
 		if(check.length > 0 && check.to$().eq(0).hasClass('selected') == false){
 			alert("资源名重复，请确认后再修改！");
 			return;
@@ -847,7 +857,8 @@ $(document).ready(function() {
 				                   table.row('.selected').data()[4],
 				                   table.row('.selected').data()[5],
 				                   table.row('.selected').data()[6],
-				                   table.row('.selected').data()[7]
+				                   table.row('.selected').data()[7],
+				                   "<span style='color:red;font-weight:bold;'>yes</span>"
 				                   ]
 				).draw();	
 				$(table.row('.selected').node()).attr('comment', $('#update_item_comment_id').val().replace(/[\r\n]/g,""));
@@ -868,13 +879,11 @@ $(document).ready(function() {
 	//资源删除事件
 	$('.delete').click(function(){
 		var del_list = ""; 
+
 		table.rows('tr.selected').every(function (rowIdx, tableLoop, rowLoop){
 			del_list += this.data()[1] + "\n " ;
 		});
-		if(del_list==""){
-			alert("请选择要删除的项目");
-			return;
-		}
+
 		var batch_del_confirm = confirm("您真要的要批量删除下列文件吗:\n" + del_list);
 		if(batch_del_confirm == true){
 			var del_info = "";
@@ -888,6 +897,7 @@ $(document).ready(function() {
 					url:"DeleteItem.do",
 					async:false,
 					type:'post',
+					dataType:'text',
 					data:d,
 					success:function(result_data){
 						if(result_data == "1"){
@@ -988,7 +998,7 @@ $(document).ready(function() {
 			return;
 		}
 
-		if(table.rows('*[item_name=' + $('#upload_link_name_id').val() + ']').nodes().length > 0){
+		if(table.rows("*[item_name='" + $('#upload_link_name_id').val() + "']").nodes().length > 0){
 			alert("资源名重复，请重命名链接名后再上传！");
 			return;
 		}	
@@ -1004,7 +1014,7 @@ $(document).ready(function() {
 			async:false,
 			type:'post',
 			data:d,
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
 				//提示创建结果
 				if(data == "error"){
@@ -1013,6 +1023,7 @@ $(document).ready(function() {
 				}
 
 				alert("链接创建成功！");
+				data = eval("(" + data + ")");
 				var new_row = table.row.add([table.rows().data().length + 1, 
 				               $('#upload_link_name_id').val(),
 			               		data[1],
@@ -1020,7 +1031,8 @@ $(document).ready(function() {
 			               		data[3],
 			               		data[4],
 			               		data[5],
-			               		data[6]
+			               		data[6],
+			               		"<span style='color:red;font-weight:bold;'>yes</span>"
 						]).draw().node();
 				$(new_row).attr("rid", data[0]);
 				$(new_row).attr("comment", $("#upload_link_comment_id").val());
@@ -1061,7 +1073,7 @@ $(document).ready(function() {
 				continue;
 			}
 			
-			if(table.rows('*[item_name=' + link_items[0] + ']').nodes().length > 0){
+			if(table.rows("*[item_name='" + link_items[0] + "']").nodes().length > 0){
 				$("#link_upload_result").append("<div class='result_bar'><img src='img/ui/Cancel.png' height=80% style='vertical-align:middle'></img>" + link_items[0]+ ' 名称重复' + '</div>');
 				continue;
 			}	
@@ -1077,7 +1089,7 @@ $(document).ready(function() {
 				async:false,
 				type:'post',
 				data:d,
-				dataType:'json',
+				dataType:'text',
 				success:function(data){
 					//提示创建结果
 					if(data == "error"){
@@ -1085,6 +1097,7 @@ $(document).ready(function() {
 						return;
 					}
 
+					data = eval("(" + data + ")");
 					$("#link_upload_result").append("<div class='result_bar'><img src='img/ui/Checked.png' height=80% style='vertical-align:middle'></img>" + link_items[0] + ' 添加成功</div>');
 					var new_row = table.row.add([table.rows().data().length + 1, 
 					                link_items[0],
@@ -1093,7 +1106,8 @@ $(document).ready(function() {
 				               		data[3],
 				               		data[4],
 				               		data[5],
-				               		data[6]
+				               		data[6],
+				               		"<span style='color:red;font-weight:bold;'>yes</span>"
 							]).draw().node();
 					$(new_row).attr("rid", data[0]);
 					$(new_row).attr("comment", "");
@@ -1116,7 +1130,6 @@ $(document).ready(function() {
 		$('#replace_link_url_id').val("");
 		$('#replace_link_comment_id').val($(table.row('.selected').node()).attr("comment"));
 		$('#replace_link_name_id').val(table.row('.selected').data()[1]);
-		$(table.row('.selected').node()).attr("comment", $("#upload_link_comment_id").val());
 
 		var oBox = document.getElementById("replace_link_dialog");
 		var oBar = document.getElementById("mybar4");
@@ -1155,7 +1168,8 @@ $(document).ready(function() {
 				                   table.row('.selected').data()[4],
 				                   table.row('.selected').data()[5],
 				                   table.row('.selected').data()[6],
-				                   table.row('.selected').data()[7]
+				                   table.row('.selected').data()[7],
+				                   "<span style='color:red;font-weight:bold;'>yes</span>"
 				                   ]
 				).draw();
 			}			
@@ -1165,18 +1179,26 @@ $(document).ready(function() {
 		$("#replace_link_dialog").fadeOut(500);
 		$("#mask").fadeOut(500);
 	});	
+	
+	//查看日志事件
+	$('#check_log_button').click(function(){
+		$.ajax({
+			url:"getItemCheckLog.do",
+			data:{"item_id":$(table.row('.selected').node()).attr("rid")},
+			async:false,
+			type:'post',
+			dataType:'text',
+			success:function(data){
+				$("#log").text("");
+				$("#log").append("<p style='margin:10px'>" + data + "</p>");
+			}			
+		});	
+	});
 
 	//全选和取消全选事件
 	$('#select_all_button').click(function(){
-/*		$("tr[role=row][class=odd],tr[role=row][class=even]").each(function(){
-			$(this).attr("class", $(this).attr("class") + " selected");
-		});*/
-		table.rows().nodes().to$().addClass('selected');
+		table.rows({search:'applied'}).nodes().to$().addClass('selected');
 		check_status(table);
-	/*	$("tr[role=row][class='odd selected'],tr[role=row][class='even selected']").each(function(){
-			//console.log($(this).attr("class"));
-			$(this).attr("class", $(this).attr("class").split(" ")[0]);
-		});	*/
 	});
 	$(".cancel_all_button").click(function(){
 		table.rows('.selected').nodes().to$().removeClass('selected');

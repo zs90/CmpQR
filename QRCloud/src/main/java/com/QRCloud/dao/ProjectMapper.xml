@@ -15,6 +15,10 @@
   	 <result property="downloadQRUrl" column="qrcode_s3_url_down" />
   	 <result property="checkStatus" column="check_status" />
   	 <result property="checkInfo" column="check_info" />
+  	 <result property="writer" column="writer" />
+  	 <result property="editor" column="editor" />
+  	 <result property="candidateNum" column="candidate_num" />
+  	 <result property="edition" column="edition" />
   </resultMap>
   
   <select id="listAllProjects" resultMap="projectResult">
@@ -53,7 +57,14 @@
   </select>
   
   <update id="updateProject">
-  	update projects set project_name = #{project.projectName}, project_comment = #{project.projectComment}, pub_num = #{project.pubNum}, access_threshold = #{project.accessThreshold} 
+  	update projects set project_name = #{project.projectName}, 
+  						project_comment = #{project.projectComment}, 
+  						pub_num = #{project.pubNum}, 
+  						access_threshold = #{project.accessThreshold},
+  						editor = #{project.editor},
+  						writer = #{project.writer},
+  						edition = #{project.edition},
+  						candidate_num = #{project.candidateNum}
   	where project_id = #{project.projectId}
   </update>
   
@@ -71,12 +82,12 @@
   </update>
   
   <select id="getProjects" resultMap="projectResult">
-  	select * from projects where project_name like CONCAT('%',#{projectName},'%' ) and check_status = #{checkStatus}
+  	select * from projects where project_name like CONCAT('%',#{projectName},'%' ) and check_status = #{checkStatus} order by projects.update_time desc, projects.create_time desc limit #{offset}, #{len}
   </select>
   
   <select id="getProjectsWithUser" resultMap="projectResult">
   	select * from projects where project_name like CONCAT('%',#{projectName},'%' ) 
-  	         and owner_id = (select user_id from users where user_name = #{userName}) and check_status = #{checkStatus}
+  	         and owner_id = (select user_id from users where user_name = #{userName}) and check_status = #{checkStatus} order by projects.update_time desc, projects.create_time desc limit #{offset}, #{len}
   </select>
   
   <select id="getVisitData" resultType="hashmap">
@@ -86,6 +97,23 @@
 				and t_ip_location.visit_time &lt; #{vs.endDate}
 				group by province 
 				order by count DESC  	
+  </select>
+  
+  <select id="countProjectLengthWithUser" resultType="java.lang.Integer">
+  	select count(project_id) from projects where projects.owner_id = (select user_id from users where user_name = #{userName}) and projects.check_status = #{checkStatus}
+  </select>
+  
+  <select id="countProjectLength" resultType="java.lang.Integer">
+  	select count(project_id) from projects where check_status = #{checkStatus}
+  </select>
+  
+  <select id="countSearchedLengthWithUser" resultType="java.lang.Integer">
+  	select count(project_id) from projects where project_name like CONCAT('%',#{projectName},'%' ) 
+  	         and owner_id = (select user_id from users where user_name = #{userName}) and check_status = #{checkStatus}
+  </select>
+  
+  <select id="countSearchedLength" resultType="java.lang.Integer">
+  	select count(project_id) from projects where project_name like CONCAT('%',#{projectName},'%' ) and check_status = #{checkStatus}
   </select>
 </mapper>
 

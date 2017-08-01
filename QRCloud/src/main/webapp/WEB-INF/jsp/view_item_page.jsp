@@ -137,27 +137,6 @@
 	</div>
 </div>
 
-<!-- 驳回资源对话框 -->
-<div id="deny_dialog" class="pop_dialog" style="height:300px">
-	<div id="mybar2" class="dialog_bar"></div>
-	<div class="input_table" style="height:150px">
-		<table border="0">
-			<tr>
-				<td>
-					退回理由
-				</td>
-				<td>	
-					<div class="input_box2"><textarea name="deny_reason" id="deny_reason_id" class="ta"></textarea></div>
-				</td>
-			</tr>
-		</table>
-	</div>	
-	<div class="buttons"> 
-		<div id="confirm_deny" class="button">确定</div>&nbsp;&nbsp;&nbsp;&nbsp; 
-		<div id="cancel_deny" class="button">取消</div> 
-	</div>
-</div>
-
 <!-- 主页面 -->
 <div id="main_page">
 	<!-- 上导航栏 -->
@@ -176,25 +155,8 @@
 			<div id="pv_button" class="operation" style="display:none; float:right" >
 				<img src="img/ui/Document.png" width=25 height=25 style="vertical-align:middle;"></img>
 				访问统计
-			</div>	
-			<div id="pass_button" class="operation c_pass" style="float:right;display:none;">
-				<img src="img/ui/Checkmark.png" width=25 height=25 style="vertical-align:middle;"></img>
-				通过审核
-			</div>
-			<div id="deny_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/Unchecked.png" width=25 height=25 style="vertical-align:middle;"></img>
-				不通过
-			</div>	
-			<div id="check_log_button" class="operation" style="float:right;display:none;">
-				<img src="img/ui/News.png" width=25 height=25 style="vertical-align:middle;"></img>
-				审阅意见
-			</div>
-			<div class="operation cancel_all_button  multiple_select" style="float:left;display:none;" >取消选择</div>
-			<div class="selected_sum  multiple_select" style="color:white; float:left; width:120px; margin:15px 20px; line-height:30px;display:none;"></div>
-			<div class="operation multiple_select c_pass" style="float:right;display:none;">
-				<img src="img/ui/Checkmark.png" width=25 height=25 style="vertical-align:middle;"></img>
-				批量通过
-			</div>
+			</div>		
+			<div class="operation cancel_all_button after_select multiple_select" style="float:left" >取消选择</div>
 	</div>
 	<!-- 左导航栏 -->
 	<div id="left_nav_bar">
@@ -212,7 +174,7 @@
 			</b>
 		</div>
 		<div class="left_sub_bar dynamic">	
-			<div id="return_button" onclick="window.location.href='/QRCloud/check_project.do'">
+			<div id="return_button" onclick="window.location.href='${from}'">
 				<img src="img/ui/Home.png" width=25 height=25 style="vertical-align:middle;"></img>
 				返回项目
 			</div>
@@ -226,12 +188,9 @@
 	</div>
 	<!-- 表格区域 -->
 	<div id="content_area">
-		<div id="select_all_button" class="operation button" style="margin:10px 20px 0; display:inline-block">全选</div>
-		<div id='table' style="height:65%;">	
+		<div id='table' style="height:90%;">	
 			<table id="item_table" class="display" width="100%">
 			</table>
-		</div>
-		<div id="log" style="width:100%; height:20%; border-top:solid 1px #B4B4B4; overflow:auto">
 		</div>
 	</div>
 </div>
@@ -243,37 +202,13 @@ function check_status(table){
 		$("#search_box").css("display", "none");
 		$("#inspect_button").css("display", "block");
 		$("#pv_button").css("display", "block");
-		$("#pass_button").css("display", "block");
-		$("#deny_button").css("display", "block");
 		$('#upper_nav_bar').css("background-color", "#3B93FF");
-		$('#check_log_button').css("display", "block");
-		$('.multiple_select').css("display","none");
-		$('.selected_sum').css("display","block");
-		$('.selected_sum').text("已选择了" + table.rows(".selected").data().length + "项");
-		$('.cancel_all_button').css("display","block");
 	}
 	else if(table.rows(".selected").data().length == 0){
 		$("#search_box").css("display", "block");
 		$("#inspect_button").css("display","none");	
 		$("#pv_button").css("display", "none");
-		$("#pass_button").css("display", "none");
-		$("#deny_button").css("display", "none");
 		$('#upper_nav_bar').css("background-color", "#F5F6F9");
-		$('#check_log_button').css("display", "none");
-		$('.multiple_select').css("display","none");
-		$('.selected_sum').css("display","none");
-	}
-	else{
-		$("#search_box").css("display", "none");
-		$("#inspect_button").css("display","none");	
-		$("#pv_button").css("display", "none");
-		$("#pass_button").css("display", "none");
-		$("#deny_button").css("display", "none");
-		$('#upper_nav_bar').css("background-color", "#3B93FF");
-		$('#check_log_button').css("display", "none");
-		$('.multiple_select').css("display","block");
-		$('.selected_sum').css("display","block");
-		$('.selected_sum').text("已选择了" + table.rows(".selected").data().length + "项");
 	}
 }
 
@@ -298,9 +233,7 @@ $(document).ready(function() {
 	var comments = [];
 	var all_types = ["gif","png","jpg","mp4","mp3","bmp","pdf"];
 	var link_types = ["paper","web"];
-	var ctrl_down = false;
-	var shift_down = false;
-	
+
 	//表格数据加载
 	$.ajax({
 		url:"GetItemList.do",
@@ -346,44 +279,14 @@ $(document).ready(function() {
 		$(row).attr("comment", comments[i]);
 		$(row).attr("item_name", dataSet[i][1]);
 	}
-	
 	//表格中项目选中事件
-	var last_item, shift_start, shift_end;	
 	$('#item_table tbody').on('click', 'tr', function(){
-		if(ctrl_down == false && shift_down == false){
-			if($(this).hasClass('selected')){
-				$(this).removeClass('selected');
-			}
-			else{
-				table.$('tr.selected').removeClass('selected');
-				$(this).addClass('selected');
-			}
-			last_item = table.row(this).index();
+		if($(this).hasClass('selected')){
+			$(this).removeClass('selected');
 		}
-		else if(ctrl_down == true){
-			$(this).toggleClass('selected');
-			last_item = table.row(this).index();
-		}
-		else if(shift_down == true){
-			if(table.rows('.selected').data().length == 0)
-				last_item = 0;
-
-			table.rows('.selected').nodes().to$().removeClass("selected");
-
-			current_item = table.row(this).index();
-			
-			if(current_item >= last_item){
-				shift_start = last_item;
-				shift_end = current_item;
-			}
-			else{
-				shift_start = current_item;
-				shift_end = last_item;
-			}
-			for(var i = shift_start; i <= shift_end; i++){
-				tmp = table.row(i).node();
-				$(tmp).addClass('selected');
-			}
+		else{
+			table.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
 		}
 		check_status(table);
 	});
@@ -391,31 +294,6 @@ $(document).ready(function() {
 	$('#search_text_field').keyup(function(){
 	      table.search($(this).val()).draw() ;
 	});
-	
-	//按键响应事件
-	$(document).keydown(function(e){
-		if(e.which == "17" && ctrl_down == false){
-			ctrl_down = true;
-			return false;
-		}
-		else if(e.which == "16" && shift_down == false){
-			shift_down = true;
-			return false;
-		}
-	});
-	
-	$(document).keyup(function(e){
-		if(e.which == "17" && ctrl_down == true){
-			ctrl_down = false;
-			return false;
-		}
-		else if(e.which == "16" && shift_down == true){
-			shift_down = false;
-			return false;
-		}
-	});
-	
-	
 
 	//预览资源事件
 	$('#inspect_button').click(function(){	
@@ -470,11 +348,6 @@ $(document).ready(function() {
 		$("#mask").fadeOut(500);
 	});	
 	
-	//全选和取消全选事件
-	$('#select_all_button').click(function(){
-		table.rows({search:'applied'}).nodes().to$().addClass('selected');
-		check_status(table);
-	});
 	$(".cancel_all_button").click(function(){
 		table.rows('.selected').nodes().to$().removeClass('selected');
 		check_status(table);
@@ -482,124 +355,6 @@ $(document).ready(function() {
 	
 	$('#pv_button').click(function(){		
 		window.location.href = 'GetItemPV.do?id=' + $(table.row('.selected').node()).attr("rid") + '&' + 'name=' + table.row('.selected').data()[1];
-	});
-	
-	//审核通过事件
-	$('.c_pass').click(function(){
-		var pass_list =""
-		table.rows('tr.selected').every(function (rowIdx, tableLoop, rowLoop){
-			pass_list += this.data()[1] + "\n " ;
-		});
-		
-		var batch_pass_confirm = confirm("您真要的要批量通过下列文件吗:\n" + pass_list);
-		if(batch_pass_confirm == false)
-			return;
-		
-		var pass_info = "";
-		table.rows('tr.selected').every(function (rowIdx, tableLoop, rowLoop){		
-			var pass_data = {"changed":"0",
-					"item_id":$(this.node()).attr("rid"),
-					"info":""
-			};
-			
-			var temp_this = this;		
-			$.ajax({
-				url:"itemChange.do",
-				async:false,
-				type:'post',
-				dataType:'text',
-				data:pass_data,
-				success:function(result_data){
-					if(result_data == "1"){
-						pass_info += temp_this.data()[1] + "已通过\n";
-						temp_this.data([temp_this.data()[0], 
-							temp_this.data()[1],
-							temp_this.data()[2],
-							temp_this.data()[3],
-							temp_this.data()[4],
-							temp_this.data()[5],
-							temp_this.data()[6],
-							temp_this.data()[7],
-			                   "no"
-			                ]
-						).draw();
-					}
-					else{
-						pass_info += temp_this.data()[1] + "通过操作失败\n";
-					}
-				}			
-			});					
-		});
-		alert("通过结果如下:\n" + pass_info);
-	});
-	
-	//审核未通过事件
-	$('#deny_button').click(function(){
-			$("#mask").fadeTo(500, 0.6);
-			$('#deny_dialog').fadeIn(500);
-		
-			$('#deny_reason_id').val("");
-
-			var oBox = document.getElementById("deny_dialog");
-			var oBar = document.getElementById("mybar2");
-			startDrag(oBar, oBox);
-	});
-
-	$('#confirm_deny').click(function(){	
-		var deny_data = {"changed":"1",
-				"item_id":$(table.row('.selected').node()).attr("rid"),
-				"info":$('#deny_reason_id').val()
-		};
-		$.ajax({
-			url:"itemChange.do",
-			async:false,
-			data:deny_data,
-			type:'post',
-			dataType:'text',
-			success:function(data){
-				if(data == "1"){
-					alert("资源已标记为需修改！");
-					table.row('.selected').data([table.row('.selected').data()[0], 
-					   table.row('.selected').data()[1],
-	                   table.row('.selected').data()[2],
-	                   table.row('.selected').data()[3],
-	                   table.row('.selected').data()[4],
-	                   table.row('.selected').data()[5],
-	                   table.row('.selected').data()[6],
-	                   table.row('.selected').data()[7],
-	                   "<span style='color:red;font-weight:bold;'>yes</span>"
-	                   ]
-					).draw();
-				}
-				else{
-					alert("错误！");
-				}
-			}			
-		});
-						
-		//销毁对话框
-		$("#deny_dialog").fadeOut(500);
-		$("#mask").fadeOut(500);
-	});	
-	
-	$('#cancel_deny').click(function(){
-		$("#deny_dialog").fadeOut(500);
-		$("#mask").fadeOut(500);
-	});	
-
-	//查看日志事件
-	$('#check_log_button').click(function(){
-		$.ajax({
-			url:"getItemCheckLog.do",
-			data:{"item_id":$(table.row('.selected').node()).attr("rid")},
-			async:false,
-			type:'post',
-			dataType:'text',
-			success:function(data){
-				$("#log").text("");
-				$("#log").append("<p style='margin:10px'>" + data + "</p>");
-			}			
-		});	
 	});
 });
 
