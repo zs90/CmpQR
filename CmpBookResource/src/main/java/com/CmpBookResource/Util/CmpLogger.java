@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Service;
 public class CmpLogger {
 	private File file;
 	private String filePrePath;
-	private BufferedWriter bufferedWriter;
 
 	@Autowired
 	private ServletContext context;
@@ -56,11 +58,39 @@ public class CmpLogger {
 		}
 
 		FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
-		bufferedWriter = new BufferedWriter(fw);
+		BufferedWriter bufferedWriter = new BufferedWriter(fw);
 		bufferedWriter.write(message + System.getProperty("line.separator"));
 
 		bufferedWriter.close();
 		fw.close();
+	}
+	
+	/**
+	 * 用于记录运行时异常 
+	 * @param e 异常
+	 * @param fileName 记录文件名
+	 * @throws IOException IO异常
+	 */
+	public synchronized void LogException(Throwable e, String fileName) throws IOException{
+		file = new File(filePrePath + fileName);
+		
+		if (!file.exists()) {
+			file.createNewFile();
+		}		
+		
+		Date date = new Date();
+		String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+		
+		FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		PrintWriter printWriter = new PrintWriter(bufferedWriter);
+		
+		bufferedWriter.write("[ " + dateString + " ]" + System.getProperty("line.separator"));
+		e.printStackTrace(printWriter);
+		
+		printWriter.close();
+		bufferedWriter.close();
+		fileWriter.close();
 	}
 
 }

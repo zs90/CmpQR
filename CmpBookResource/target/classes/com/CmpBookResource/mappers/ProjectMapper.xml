@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CmpBookResource.mappers.ProjectMapper">
+  <resultMap id="projectResult" type="Project">
+  	 <id property="projectId" column="project_id" />
+  	 <result property="projectName" column="project_name" />
+  	 <collection property="items" javaType="ArrayList" column="project_id" ofType="Item" select="selectItemsForProject" />
+  </resultMap>
+
+  <select id="selectProject" resultMap="projectResult">
+  	select project_id, project_name from projects where project_id = #{id}
+  </select>
+  
+  <select id="selectItemsForProject" resultType="Item">
+     select 
+     	item_id  as itemId, 
+     	item_name as itemName,
+     	object_type as itemType,
+     	resource_s3_url as itemUrl
+     from items where  project_id = #{pid}
+  </select>
+</mapper>

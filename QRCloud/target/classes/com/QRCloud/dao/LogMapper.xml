@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.QRCloud.dao.LogMapper">
+  <resultMap id="logResult" type="com.QRCloud.domain.Log">
+  	 <result property="logId" column="log_id" />
+  	 <result property="subject" column="subject" />
+  	 <result property="predicate" column="predicate" />
+  	 <result property="object" column="object" />
+  	 <result property="logTime" column="log_time" />
+  	 <result property="subjectName" column="user_name" />
+  	 <result property="logInfo" column="log_info" />
+  </resultMap>
+  
+<select id="selectLogs" resultMap="logResult">
+	select t_check_log.*, users.user_name from t_check_log, users where object = #{projectId} and users.user_id = t_check_log.subject order by log_time desc limit 0,20
+</select>
+
+<insert id="insertLog">
+ 	insert into t_check_log (subject, predicate, object, log_info) values
+	((select user_id from users where user_name = #{userName}), #{log.predicate}, #{log.object}, #{log.logInfo})
+</insert>
+
+</mapper>

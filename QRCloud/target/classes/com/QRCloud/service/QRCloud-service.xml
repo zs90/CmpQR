@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<context:component-scan base-package="com.QRCloud.service" />
+	<context:component-scan base-package="com.QRCloud.schema" />
+	
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" 
+	/>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>	
+	
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceMethod"
+			expression="execution(* com.QRCloud.service..*(..))" />
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+	</aop:config>
+	
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="itemUpdateMethod"
+			expression="(execution(* com.QRCloud.service.ItemService.uploadItem(..))) 
+						or (execution(* com.QRCloud.service.ItemService.replaceItem(..)))
+						or (execution(* com.QRCloud.service.ItemService.updateItem(..)))
+						or (execution(* com.QRCloud.service.ItemService.addLinkItem(..)))
+						or (execution(* com.QRCloud.service.ItemService.updateLinkItem(..)))" 
+		/>
+		<aop:advisor pointcut-ref="itemUpdateMethod" advice-ref="ItemOperationAdvice" />
+	</aop:config>	
+
+</beans>

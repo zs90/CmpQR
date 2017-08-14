@@ -26,7 +26,7 @@
 
 .check_input_table{
 	width:650px;
-	height:380px;
+	height:530px;
 	margin:10px auto 0;
 	text-align:center;
 }
@@ -67,6 +67,97 @@
 	</div>
 </div>
 
+<!-- 预览项目对话框 -->
+<div id="check_dialog" class="pop_dialog" style="width:700px; height:650px">
+	<div id="mybar3" class="dialog_bar" style="width:700px">
+	</div>
+	<div class="check_input_table">
+		<table id="fucking_table">
+			<tr>
+				<td>
+					书名
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_project_name_id"> </p></div>
+				</td>
+				<td >
+					备注
+				</td>
+				<td>	
+					<div class="input_box2"><p id="check_project_comment_id" > </p></div>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2">
+					项目下载
+				</td>
+				<td>	
+					<div class="input_box1"  style="font-size:10px"> <a id="check_project_url_id"></a> </div>
+				</td>
+				<td rowspan="2">
+					项目在线预览
+				</td>
+				<td>	
+					<div class="input_box1"  style="font-size:10px"> <a id="check_project_display_url_id"></a> </div>
+				</td>
+			</tr>
+			<tr >
+				<td>
+					<img id="qr_down" width="160"/>
+				</td>
+				<td>
+					<img id="qr_show" width="160"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					策划编辑
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_editor_id"> </p></div>
+				</td>
+				<td>
+					选题号
+				</td>
+				<td>	
+					<div class="input_box1"><p id="check_candidate_num_id" > </p></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					版次
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_edition_id" > </p></div>
+				</td>
+				<td>
+					作者
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_writer_id" > </p></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					初审
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_1st_checker_id" > </p></div>
+				</td>
+				<td>
+					复审
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_2nd_checker_id" > </p></div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+	<div class = "buttons">		
+		<div id="cancel_check" class="button">关闭</div>
+	</div>
+</div>
+
 <!-- 主页面 -->
 <div id="main_page">
 	<!-- 上边栏 -->
@@ -77,7 +168,7 @@
 			<div id="search_box" style="float:left;display:block;">
 				<img src="img/ui/Search.png" width=30 height=30 style="vertical-align:middle;"></img>
 				<input type="text" id="search_text_field" style="vertical-align:middle;">
-				<div id="search" class="button" style="vertical-align:middle;">搜索</div>
+				<div id="search" class="button" style="vertical-align:middle;">搜索选题号</div>
 				<div id="reset" class="button" style="vertical-align:middle;">重置</div>
 			</div>
 			<div id="pass_check_button" class="operation" style="float:right;display:none;">
@@ -91,6 +182,10 @@
 			<div id="inspect_project_button" class="operation" style="float:right;display:none;">
 				<img src="img/ui/Open.png" width=25 height=25 style="vertical-align:middle;"></img>
 				查看项目
+			</div>
+			<div id="view_button" class="operation" style="float:right;display:none;">
+				<img src="img/ui/About.png" width=25 height=25 style="vertical-align:middle;"></img>
+				预览项目
 			</div>
 			<div id="enter_button" class="operation" style="float:right;display:none;">
 				<img src="img/ui/Open.png" width=25 height=25 style="vertical-align:middle;"></img>
@@ -184,6 +279,7 @@ function updateBar(checkStatusRegion, table){
 	$("#pv_button").css("display", "block");
 	$("#enter_button").css("display","none");
 	$("#inspect_project_button").css("display","block");
+	$("#view_button").css("display", "block");
 	
 	if(checkStatusRegion == 1){			
 		$("#pass_check_button").css("display","block");
@@ -207,6 +303,7 @@ function initBar(checkStatusRegion){
 	$("#deny_check_button").css("display","none");
 	$("#check_log_button").css("display", "none");
 	$("#pv_button").css("display", "none");
+	$("#view_button").css("display", "none");
 
 	$('#upper_nav_bar').css("background-color", "#F5F6F9");	
 	$("#paging").css("display", "block");
@@ -236,7 +333,8 @@ function redrawTable(table, myUrl, postData){
 				dataSet[i][5] = data[i][5];
 				dataSet[i][6] = data[i][6];
 				dataSet[i][7] = data[i][7];
-				fucking_id[i] = data[i][8];
+				dataSet[i][8] = data[i][8];
+				fucking_id[i] = data[i][9];
 			}
 			$('#sum_page_len').text(Math.ceil(data[i] / 10));
 			$('#sum_project_len').text(data[i]);
@@ -273,9 +371,10 @@ $(document).ready(function() {
 	var table = $('#project_table').DataTable( {
 			data: dataSet,
 			columns: [
-			    { title: "编号" },
-			    { title: "项目名称" , width:"200px"},
-			    { title: "项目介绍" , width:"150px"},
+			    { title: "序号" },
+			    { title: "选题编号"},
+			    { title: "书名" , width:"100px"},
+			    { title: "备注" , width:"100px"},
 			    { title: "创建时间"},
 			    { title: "修改时间"},
 			    { title: "所有者"},
@@ -431,12 +530,50 @@ $(document).ready(function() {
 		redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
 	});
 	
+	//预览项目事件
+	$('#view_button').click(function(){	
+		$("#mask").fadeTo(500, 0.6);
+		$('#check_dialog').fadeIn(500);
+	
+		$('#check_project_name_id').text( table.row('.selected').data()[2]);
+		$('#check_project_comment_id').text( table.row('.selected').data()[3]);
+		
+		var oBox = document.getElementById("check_dialog");
+        var oBar = document.getElementById("mybar3");
+        startDrag(oBar, oBox);
+
+		$.ajax({
+			url:"CheckProject.do",
+			data:{"pid":$(table.row('.selected').node()).attr("rid")},
+			async:false,
+			type:'post',
+			dataType:'json',
+			success:function(data){
+					$("#qr_show").attr("src", data[0]);
+					$("#qr_down").attr("src", data[1]);
+					$('#check_project_url_id').html("http://qr.cmpedu.com/CmpBookResource/<br/>down_project.do?pid=" + $(table.row('.selected').node()).attr("rid"));
+					$('#check_project_display_url_id').html("http://qr.cmpedu.com/CmpBookResource/<br/>show_project.do?pid=" + $(table.row('.selected').node()).attr("rid"));
+					$('#check_editor_id').text(data[3]);
+					$('#check_edition_id').text(data[4]);
+					$('#check_writer_id').text(data[2]);
+					$('#check_candidate_num_id').text(data[5]);
+					$('#check_1st_checker_id').text(data[6]);
+					$('#check_2nd_checker_id').text(data[7]);
+			}			
+		});
+	});
+	
+	$('#cancel_check').click(function(){
+		$("#check_dialog").fadeOut(500);
+		$("#mask").fadeOut(500);
+	});
+	
 	//进入项目预览事件
 	$('#inspect_project_button').click(function(){
 		var url = "view_item.do";
 		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
 		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
-		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
+		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[2] + '" />' +
 		  '</form>');
 		$('body').append(form);
 		form.submit();			
@@ -447,7 +584,7 @@ $(document).ready(function() {
 		var url = "check_item.do";
 		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
 		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
-		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
+		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[2] + '" />' +
 		  '</form>');
 		$('body').append(form);
 		form.submit();		
@@ -465,11 +602,11 @@ $(document).ready(function() {
 		   }
 	   }
 	   else{
-		   var ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+		   var ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		   if(ret == 0){
 			   alert("已经是最后一页了");
 			   currentPage -= 1;
-			   redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+			   redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		   }		   
 	   }
 	   $('#cp').text(currentPage);
@@ -485,7 +622,7 @@ $(document).ready(function() {
 		if(isSearchMode == false)
 			redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
 		else
-			redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+			redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		$('#cp').text(currentPage);
 		initBar(checkStatusRegion);	
 		$("#log").text("");
@@ -517,10 +654,10 @@ $(document).ready(function() {
 			}
 		}
 		else{
-			ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":des_page, "pageLen":10, "projectName":$('#search_text_field').val()});
+			ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":des_page, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 			if(ret == 0){
 				alert("您的选择超出了最大页码！");
-				redrawTable(table, "searchProject.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+				redrawTable(table, "searchProject.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 			}
 			else{
 				currentPage = des_page;
@@ -549,7 +686,7 @@ $(document).ready(function() {
 		redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,
 												"page":currentPage, 
 												"pageLen":10,
-												"projectName":$('#search_text_field').val()}
+												"candidateNum":$('#search_text_field').val()}
 			);
 		$("#log").text("");
 	} );

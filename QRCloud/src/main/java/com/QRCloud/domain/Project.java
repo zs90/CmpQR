@@ -33,7 +33,9 @@ public class Project implements Serializable {
 	private String downloadQRUrl; // 下载二维码在s3上的存储url，扫描后，页面将会以列表方式展现该项目下所有Item文件，并提供下载和预览两种选择。注意，这是二维码图片文件的存储路径，而非二维码本身解码出来的URL
 	private int checkStatus; // 审核状态：未审核，已提交审核，已通过审核，未通过审核，已提交修改。分别对应数值0-4
 	private String checkInfo; // 审核状态发生变化时，所记录的备注信息
-
+	private String firstChecker; //初审编辑
+	private String secondChecker; //复审编辑
+	
 	public int getPubNum() {
 		return pubNum;
 	}
@@ -200,6 +202,22 @@ public class Project implements Serializable {
 	
 	public int getEdition(){
 		return edition;
+	}
+
+	public String getFirstChecker() {
+		return firstChecker;
+	}
+
+	public void setFirstChecker(String firstChecker) {
+		this.firstChecker = firstChecker;
+	}
+
+	public String getSecondChecker() {
+		return secondChecker;
+	}
+
+	public void setSecondChecker(String secondChecker) {
+		this.secondChecker = secondChecker;
 	}
 	
 }

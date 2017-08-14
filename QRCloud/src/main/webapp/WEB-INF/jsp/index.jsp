@@ -185,7 +185,7 @@ html,body{
 		</div>
 	</div>
 	<div id="foot" style="font-family:宋体; color:#74787c">
-		<p>版权所有：机械工业出版社  Copyright (C) 2015-2016. All Rights Reserved</p>
+		<p>版权所有：机械工业出版社  Copyright (C) 2015-2017. All Rights Reserved</p>
 	</div>	
 </div>		
 <script type="text/javascript">

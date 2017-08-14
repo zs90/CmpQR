@@ -82,6 +82,7 @@ public class ProjectController {
 		for (int i = 0; i < projectList.size(); i++) {
 			List<String> tmp = new ArrayList<>();
 			tmp.add(String.valueOf(i));
+			tmp.add(projectList.get(i).getCandidateNum());
 			tmp.add(projectList.get(i).getProjectName());
 			tmp.add(projectList.get(i).getProjectComment());
 			tmp.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(projectList.get(i).getCreateTime()));
@@ -206,6 +207,8 @@ public class ProjectController {
 		ret.add(project.getEditor());
 		ret.add(String.valueOf(project.getEdition()));
 		ret.add(project.getCandidateNum());
+		ret.add(project.getFirstChecker());
+		ret.add(project.getSecondChecker());
 
 		JSONArray jsonArray = JSONArray.fromObject(ret);
 		return jsonArray.toString();
@@ -326,20 +329,21 @@ public class ProjectController {
 	 */
 	@RequestMapping(value = "/searchProject.do", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
 	@ResponseBody
-	public String searchProject(String projectName, HttpSession session, String checkStatus, int page, int pageLen) {
+	public String searchProject(String candidateNum, HttpSession session, String checkStatus, int page, int pageLen) {
 		String userName = (String) session.getAttribute("username");
 		int userGroup = (int) session.getAttribute("usergroup");
 
-		List<Project> projectList = projectService.searchProjects(projectName, userGroup, userName, checkStatus,
+		List<Project> projectList = projectService.searchProjects(candidateNum, userGroup, userName, checkStatus,
 				(page - 1) * pageLen, pageLen);
 
-		int length = projectService.getSearchedProjectLength(userName, checkStatus, userGroup, projectName);
+		int length = projectService.getSearchedProjectLength(userName, checkStatus, userGroup, candidateNum);
 		
 		List<Object> list = new ArrayList<>();
 
 		for (int i = 0; i < projectList.size(); i++) {
 			List<String> tmp = new ArrayList<>();
 			tmp.add(String.valueOf(i));
+			tmp.add(projectList.get(i).getCandidateNum());
 			tmp.add(projectList.get(i).getProjectName());
 			tmp.add(projectList.get(i).getProjectComment());
 			tmp.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(projectList.get(i).getCreateTime()));

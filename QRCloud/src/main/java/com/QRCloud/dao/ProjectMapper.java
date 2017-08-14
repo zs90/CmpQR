@@ -158,12 +158,12 @@ public interface ProjectMapper {
 	int updateProjectCheckStatus(@Param("project") Project project);
 
 	/**
-	 * 通过User，ProjectName以及checkStatus获取对应的Project信息。
-	 * 主要用于分社用户的基于Project名称的模糊搜索服务，该搜索是局部搜索，搜索范围限制在某单一分社用户所属Project。
+	 * 通过User，candidateNum以及checkStatus获取对应的Project信息。
+	 * 主要用于分社用户的基于选题号的模糊搜索服务，该搜索是局部搜索，搜索范围限制在某单一分社用户所属Project。
 	 * 
 	 * 
-	 * @param projectName
-	 *            Project的名称
+	 * @param candidateNum
+	 *            选题号
 	 * @param userName
 	 *            Project所属的User
 	 * @param checkStatus
@@ -174,29 +174,29 @@ public interface ProjectMapper {
 	 *            页长
 	 * @return 符合条件的所有的Project，封装至一个列表中
 	 */
-	List<Project> getProjectsWithUser(@Param("projectName") String projectName, @Param("userName") String userName,
+	List<Project> getProjectsWithUser(@Param("candidateNum") String candidateNum, @Param("userName") String userName,
 			@Param("checkStatus") String checkStatus, @Param("offset") int offset, @Param("len") int len);
 
 	/**
 	 * 获取搜索结果的长度
 	 * 
-	 * @param projectName
-	 *            project名称
+	 * @param candidateNum
+	 *            选题号
 	 * @param userName
 	 *            用户名
 	 * @param checkStatus
 	 *            审核状态
 	 * @return 结果长度
 	 */
-	int countSearchedLengthWithUser(@Param("projectName") String projectName, @Param("userName") String userName,
+	int countSearchedLengthWithUser(@Param("candidateNum") String candidateNum, @Param("userName") String userName,
 			@Param("checkStatus") String checkStatus);
 
 	/**
-	 * 通过ProjectName,checkStatus信息获取对应的Project信息
-	 * 主要用于审核用户的基于Project名称的模糊搜索服务，该搜索是全局搜索，搜索范围限制在所有分社用户所属Project
+	 * 通过candidateNum,checkStatus信息获取对应的Project信息
+	 * 主要用于审核用户的基于选题号的模糊搜索服务，该搜索是全局搜索，搜索范围限制在所有分社用户所属Project
 	 * 
-	 * @param projectName
-	 *            Project的名称
+	 * @param candidateNum
+	 *            选题号
 	 * @param checkStatus
 	 *            Project所处的审核状态
 	 * @param offset
@@ -205,19 +205,19 @@ public interface ProjectMapper {
 	 *            页长
 	 * @return 符合条件的所有的Project，封装至一个列表中
 	 */
-	List<Project> getProjects(@Param("projectName") String projectName, @Param("checkStatus") String checkStatus,
+	List<Project> getProjects(@Param("candidateNum") String candidateNum, @Param("checkStatus") String checkStatus,
 			@Param("offset") int offset, @Param("len") int len);
 
 	/**
 	 * 获取搜索的结果的长度
 	 * 
-	 * @param projectName
-	 *            project名称
+	 * @param candidateNum
+	 *            选题号
 	 * @param checkStatus
 	 *            审核状态
 	 * @return 结果长度
 	 */
-	int countSearchedLength(@Param("projectName") String projectName, @Param("checkStatus") String checkStatus);
+	int countSearchedLength(@Param("candidateNum") String candidateNum, @Param("checkStatus") String checkStatus);
 
 	/**
 	 * 根据vs对象所提供的查询条件，查询和统计指定时间段不同城市访问某个Project次数的分布情况

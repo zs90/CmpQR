@@ -26,7 +26,7 @@
 
 .check_input_table{
 	width:650px;
-	height:480px;
+	height:530px;
 	margin:10px auto 0;
 	text-align:center;
 }
@@ -57,24 +57,24 @@
 </div>
 
 <!-- 创建项目对话框 -->
-<div id="create_dialog" class="pop_dialog" style="height:600px">
+<div id="create_dialog" class="pop_dialog" style="height:700px">
 	<div id="mybar1" class="dialog_bar"></div>
-	<div class="input_table" style = "height:480px;">
+	<div class="input_table" style = "height:580px;">
 		<table border="0">
 			<tr>
 				<td>
-					项目名
+					书名
 				</td>
 				<td>	
-					<div class="input_box1"><input type="text" name="create_project_name" id="create_pjname_id" class="ti" placeholder="请输入项目名"/></div>
+					<div class="input_box1"><input type="text" name="create_project_name" id="create_pjname_id" class="ti" placeholder="请输入书名"/></div>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					项目介绍
+					备注
 				</td>
 				<td>
-					<div class="input_box2"><textarea name="create_project_comment" id="create_pjcomm_id" class="ta" placeholder="请输入项目简介"></textarea></div>
+					<div class="input_box2"><textarea name="create_project_comment" id="create_pjcomm_id" class="ta" placeholder="请输入备注"></textarea></div>
 				</td>
 			</tr>
 			<tr>
@@ -83,6 +83,22 @@
 				</td>
 				<td>
 					<div class="input_box1"><input type="text" name="create_editor_name" id="create_editor_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					初审
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_1st_check_name" id="create_1st_check_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					复审
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="create_2nd_check_name" id="create_2nd_check_id" class="ti"/></div> 
 				</td>
 			</tr>
 			<tr>
@@ -133,13 +149,13 @@
 	</div>
 </div>
 <!-- 更新项目对话框 -->
-<div id="update_dialog" class="pop_dialog" style="height:600px">
+<div id="update_dialog" class="pop_dialog" style="height:700px">
 	<div id="mybar2" class="dialog_bar"></div>
-	<div class="input_table" style="height:480px">
+	<div class="input_table" style="height:580px">
 		<table border="0">
 			<tr>
 				<td>
-					项目名
+					书名
 				</td>
 				<td>
 					<div class="input_box1"><input type="text" name="update_project_name" id="update_pjname_id" class="ti"/></div> 
@@ -147,7 +163,7 @@
 			</tr>
 			<tr>
 				<td>
-					项目介绍
+					备注
 				</td>
 				<td>	
 					<div class="input_box2"><textarea name="update_project_comment" id="update_pjcomm_id" class="ta"></textarea></div>
@@ -159,6 +175,22 @@
 				</td>
 				<td>
 					<div class="input_box1"><input type="text" name="update_editor_name" id="update_editor_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					初审
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_1st_check_name" id="update_1st_check_id" class="ti"/></div> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					复审
+				</td>
+				<td>
+					<div class="input_box1"><input type="text" name="update_2nd_check_name" id="update_2nd_check_id" class="ti"/></div> 
 				</td>
 			</tr>
 			<tr>
@@ -209,20 +241,20 @@
 	</div>
 </div>
 <!-- 预览项目对话框 -->
-<div id="check_dialog" class="pop_dialog" style="width:700px; height:600px">
+<div id="check_dialog" class="pop_dialog" style="width:700px; height:650px">
 	<div id="mybar3" class="dialog_bar" style="width:700px">
 	</div>
 	<div class="check_input_table">
 		<table id="fucking_table">
 			<tr>
 				<td>
-					项目名
+					书名
 				</td>
 				<td>
 					<div class="input_box1"><p id="check_project_name_id"> </p></div>
 				</td>
 				<td >
-					项目介绍
+					备注
 				</td>
 				<td>	
 					<div class="input_box2"><p id="check_project_comment_id" > </p></div>
@@ -278,6 +310,20 @@
 					<div class="input_box1"><p id="check_writer_id" > </p></div>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					初审
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_1st_checker_id" > </p></div>
+				</td>
+				<td>
+					复审
+				</td>
+				<td>
+					<div class="input_box1"><p id="check_2nd_checker_id" > </p></div>
+				</td>
+			</tr>
 		</table>
 	</div>	
 	<div class = "buttons">		
@@ -294,7 +340,7 @@
 			<div id="search_box" style="float:left;display:block;">
 				<img src="img/ui/Search.png" width=30 height=30 style="vertical-align:middle;"></img>
 				<input type="text" id="search_text_field" style="vertical-align:middle;">
-				<div id="search" class="button" style="vertical-align:middle;">搜索</div>
+				<div id="search" class="button" style="vertical-align:middle;">搜索选题号</div>
 				<div id="reset" class="button" style="vertical-align:middle;">重置</div>
 			</div>
 			<div id="create_button" class="operation button" style="float:right;display:block;">
@@ -539,7 +585,8 @@ function redrawTable(table, myUrl, postData){
 				dataSet[i][5] = data[i][5];
 				dataSet[i][6] = data[i][6];
 				dataSet[i][7] = data[i][7];
-				fucking_id[i] = data[i][8];
+				dataSet[i][8] = data[i][8];
+				fucking_id[i] = data[i][9];
 			}
 			$('#sum_page_len').text(Math.ceil(data[i] / 10));
 			$('#sum_project_len').text(data[i]);
@@ -576,9 +623,10 @@ $(document).ready(function() {
 	var table = $('#project_table').DataTable( {
 			data: dataSet,
 			columns: [
-			    { title: "编号" },
-			    { title: "项目名称" , width:"200px"},
-			    { title: "项目介绍" , width:"150px"},
+			    { title: "序号" },
+			    { title: "选题编号"},
+			    { title: "书名" , width:"100px"},
+			    { title: "备注" , width:"100px"},
 			    { title: "创建时间"},
 			    { title: "修改时间"},
 			    { title: "所有者"},
@@ -664,6 +712,8 @@ $(document).ready(function() {
 		$('#create_edition_id').val("1");
 		$('#create_writer_id').val("");
 		$('#create_candidate_num_id').val("0");
+		$('#create_1st_check_id').val("");
+		$('#create_2nd_check_id').val("");
 		
 		var oBox = document.getElementById("create_dialog");
         var oBar = document.getElementById("mybar1");
@@ -674,7 +724,7 @@ $(document).ready(function() {
 	$('#confirm_create').click(function(){	
 		//表单验证
 		if($('#create_pjname_id').val() == ""){
-			alert("项目名不可为空");
+			alert("书名不可为空");
 			return;
 		}
 		
@@ -697,7 +747,9 @@ $(document).ready(function() {
 				"writer":$('#create_writer_id').val(),
 				"editor":$('#create_editor_id').val(),
 				"edition":$('#create_edition_id').val(),
-				"candidateNum":$('#create_candidate_num_id').val()
+				"candidateNum":$('#create_candidate_num_id').val(),
+				"firstChecker":$('#create_1st_check_id').val(),
+				"secondChecker":$('#create_2nd_check_id').val()
 				};
 		
 		$.ajax({
@@ -714,7 +766,8 @@ $(document).ready(function() {
 					alert("项目创建成功！");
 					data = eval("(" + data + ")");
 					var new_row = table.row.add([table.rows().data().length + 1, 
-					                $('#create_pjname_id').val(),
+									$('#create_candidate_num_id').val(),
+									$('#create_pjname_id').val(),
 				               		$('#create_pjcomm_id').val(), 
 				               		data[1],
 				               		data[2],
@@ -767,10 +820,10 @@ $(document).ready(function() {
 			$("#mask").fadeTo(500, 0.6);
 			$('#update_dialog').fadeIn(500);
 		
-			$('#update_pjname_id').val(table.row('.selected').data()[1]);
-			$('#update_pjcomm_id').val(table.row('.selected').data()[2]);
-			$('#update_pub_num_id').val(table.row('.selected').data()[6]);
-			$('#update_access_threshold_id').val(table.row('.selected').data()[7]);
+			$('#update_pjname_id').val(table.row('.selected').data()[2]);
+			$('#update_pjcomm_id').val(table.row('.selected').data()[3]);
+			$('#update_pub_num_id').val(table.row('.selected').data()[7]);
+			$('#update_access_threshold_id').val(table.row('.selected').data()[8]);
 			
 			$.ajax({
 				url:"CheckProject.do",
@@ -783,6 +836,8 @@ $(document).ready(function() {
 						$('#update_edition_id').val(data[4]);
 						$('#update_writer_id').val(data[2]);
 						$('#update_candidate_num_id').val(data[5]);
+						$('#update_1st_check_id').val(data[6]);
+						$('#update_2nd_check_id').val(data[7]);
 				}			
 			});
 			
@@ -823,7 +878,9 @@ $(document).ready(function() {
 				"writer":$('#update_writer_id').val(),
 				"editor":$('#update_editor_id').val(),
 				"edition":$('#update_edition_id').val(),
-				"candidateNum":$('#update_candidate_num_id').val()
+				"candidateNum":$('#update_candidate_num_id').val(),
+				"firstChecker":$('#update_1st_check_id').val(),
+				"secondChecker":$('#update_2nd_check_id').val()
 				};
 		$.ajax({
 			url:"UpdateProject.do",
@@ -838,11 +895,12 @@ $(document).ready(function() {
 				else{
 					alert("项目更新成功！");
 					table.row('.selected').data([table.row('.selected').data()[0], 
-					                   $('#update_pjname_id').val(), 
+		                   			   $('#update_candidate_num_id').val(),               
+									   $('#update_pjname_id').val(), 
 					                   $('#update_pjcomm_id').val(), 
-					                   table.row('.selected').data()[3],
+					                   table.row('.selected').data()[4],
 					                   data,
-					                   table.row('.selected').data()[5],
+					                   table.row('.selected').data()[6],
 					                   $('#update_pub_num_id').val(),
 					                   $('#update_access_threshold_id').val()
 					                   ]
@@ -866,7 +924,7 @@ $(document).ready(function() {
 		var url = "item_page.do";
 		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
 		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
-		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
+		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[2] + '" />' +
 		  '</form>');
 		$('body').append(form);
 		form.submit();		
@@ -877,7 +935,7 @@ $(document).ready(function() {
 		var url = "view_item.do";
 		var form = $('<form action="' + url + '" method="post"'+ 'type="hidden"' + '>' +
 		  '<input type="text" name="project_id" value="' + $(table.row('.selected').node()).attr("rid") + '" />' +
-		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[1] + '" />' +
+		  '<input type="text" name="project_name" value="' + table.row('.selected').data()[2] + '" />' +
 		  '</form>');
 		$('body').append(form);
 		form.submit();			
@@ -888,8 +946,8 @@ $(document).ready(function() {
 		$("#mask").fadeTo(500, 0.6);
 		$('#check_dialog').fadeIn(500);
 	
-		$('#check_project_name_id').text( table.row('.selected').data()[1]);
-		$('#check_project_comment_id').text( table.row('.selected').data()[2]);
+		$('#check_project_name_id').text( table.row('.selected').data()[2]);
+		$('#check_project_comment_id').text( table.row('.selected').data()[3]);
 		
 		var oBox = document.getElementById("check_dialog");
            		var oBar = document.getElementById("mybar3");
@@ -910,6 +968,8 @@ $(document).ready(function() {
 					$('#check_edition_id').text(data[4]);
 					$('#check_writer_id').text(data[2]);
 					$('#check_candidate_num_id').text(data[5]);
+					$('#check_1st_checker_id').text(data[6]);
+					$('#check_2nd_checker_id').text(data[7]);
 			}			
 		});
 	});
@@ -1100,11 +1160,11 @@ $(document).ready(function() {
 		   }
 	   }
 	   else{
-		   var ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+		   var ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		   if(ret == 0){
 			   alert("已经是最后一页了");
 			   currentPage -= 1;
-			   redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+			   redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		   }		   
 	   }
 	   $('#cp').text(currentPage);
@@ -1120,7 +1180,7 @@ $(document).ready(function() {
 		if(isSearchMode == false)
 			redrawTable(table, "GetProjectList.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10});
 		else
-			redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+			redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 		$('#cp').text(currentPage);
 		initBar(checkStatusRegion);	
 		$("#log").text("");
@@ -1152,10 +1212,10 @@ $(document).ready(function() {
 			}
 		}
 		else{
-			ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":des_page, "pageLen":10, "projectName":$('#search_text_field').val()});
+			ret = redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,"page":des_page, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 			if(ret == 0){
 				alert("您的选择超出了最大页码！");
-				redrawTable(table, "searchProject.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10, "projectName":$('#search_text_field').val()});
+				redrawTable(table, "searchProject.do", {"checkStatus":checkStatusRegion, "page":currentPage, "pageLen":10, "candidateNum":$('#search_text_field').val()});
 			}
 			else{
 				currentPage = des_page;
@@ -1184,7 +1244,7 @@ $(document).ready(function() {
 		redrawTable(table, "searchProject.do",{"checkStatus":checkStatusRegion,
 												"page":currentPage, 
 												"pageLen":10,
-												"projectName":$('#search_text_field').val()}
+												"candidateNum":$('#search_text_field').val()}
 					);
 		$("#log").text("");
 	} );

@@ -1,5 +1,6 @@
 package com.CmpBookResource.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CmpBookResource.Util.AWSS3Client;
+import com.CmpBookResource.Util.CmpLogger;
 import com.CmpBookResource.Util.ValidFileType;
 import com.CmpBookResource.model.Item;
 import com.CmpBookResource.model.Project;
@@ -38,6 +40,9 @@ public class DisplayServlet {
 
 	@Autowired
 	private ValidFileType validFileType;
+	
+	@Autowired
+	private CmpLogger cmpLogger;
 
 	/**
 	 * 处理show_resource.do的http请求，该请求负责展示具体的在线预览的界面
@@ -203,15 +208,14 @@ public class DisplayServlet {
 	 * @param e
 	 *            异常
 	 * @return 返回自定义的错误页面
+	 * @throws IOException 
 	 */
 	@ExceptionHandler(Throwable.class)
-	public String handleRunTimeException(Throwable e) {
-		// 日志记录时间和调用栈
-		Date date = new Date();
-		String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-		System.err.println("[ " + dateString + " ]");
-		e.printStackTrace();
-
+	public String handleRunTimeException(Throwable e) throws IOException {
+		// 日志记录异常
+		String day = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		cmpLogger.LogException(e, "Exception_log_" + day + ".log");
+		
 		// 返回自定义的错误页面
 		return "/error/500_error";
 	}

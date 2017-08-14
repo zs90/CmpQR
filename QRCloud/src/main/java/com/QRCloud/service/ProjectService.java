@@ -348,12 +348,12 @@ public class ProjectService {
 	 *            页长
 	 * @return 封装了project对象的列表
 	 */
-	public List<Project> searchProjects(String projectName, int userGroup, String userName, String checkStatus,
+	public List<Project> searchProjects(String candidateNum, int userGroup, String userName, String checkStatus,
 			int offset, int len) {
 		if (userGroup == 0)
-			return projectMapper.getProjectsWithUser(projectName, userName, checkStatus, offset, len);
+			return projectMapper.getProjectsWithUser(candidateNum, userName, checkStatus, offset, len);
 		else
-			return projectMapper.getProjects(projectName, checkStatus, offset, len);
+			return projectMapper.getProjects(candidateNum, checkStatus, offset, len);
 	}
 
 	/**
@@ -397,10 +397,10 @@ public class ProjectService {
 	 *            project名称
 	 * @return 长度值
 	 */
-	public int getSearchedProjectLength(String userName, String checkStatus, int userGroup, String projectName) {
+	public int getSearchedProjectLength(String userName, String checkStatus, int userGroup, String candidateNum) {
 		if (userGroup == 0)
-			return projectMapper.countSearchedLengthWithUser(projectName, userName, checkStatus);
+			return projectMapper.countSearchedLengthWithUser(candidateNum, userName, checkStatus);
 		else
-			return projectMapper.countSearchedLength(projectName, checkStatus);
+			return projectMapper.countSearchedLength(candidateNum, checkStatus);
 	}
 }

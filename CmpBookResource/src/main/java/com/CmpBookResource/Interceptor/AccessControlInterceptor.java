@@ -1,6 +1,8 @@
 package com.CmpBookResource.Interceptor;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +81,13 @@ public class AccessControlInterceptor implements HandlerInterceptor {
 			for (int i = 0; i < cookies.length; i++) {
 				Cookie cookie = cookies[i];
 				String value = cookie.getValue();
+				
+				//检验cookie有效性
+				Pattern pattern = Pattern.compile("[0-9]+&[0-9]+");
+				Matcher matcher = pattern.matcher(value);
+				if(matcher.matches() == false)
+					break;
+				
 				String[] str = value.split("&");
 				long timeStamp = Long.parseLong(str[0]);
 				int accessTimes = Integer.parseInt(str[1]);
